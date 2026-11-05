@@ -1,0 +1,51 @@
+{
+  "runs": {
+    "$uid": {
+      ".read": "auth != null && auth.uid === $uid",
+      ".write": "auth != null && auth.uid === $uid && newData.exists() && (!data.exists() || now - data.child('t').val() >= 2000)",
+      ".validate": "newData.hasChildren(['t'])",
+      "t": {
+        ".validate": "newData.val() === now"
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  },
+  "all": {
+    "scores": {
+      ".read": true,
+      ".indexOn": [
+        "s"
+      ],
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid && newData.exists() && ((newData.child('st').val() === root.child('chikyu/runs/' + $uid + '/t').val() && (!data.exists() || (newData.child('st').val() > data.child('st').val() && newData.child('s').val() > data.child('s').val())) && now >= newData.child('st').val() + newData.child('s').val() && now <= newData.child('st').val() + newData.child('s').val() * 1.03 + 9000) || (data.exists() && newData.child('st').val() === data.child('st').val() && newData.child('s').val() === data.child('s').val() && newData.child('in').val() === data.child('in').val()))",
+        ".validate": "newData.hasChildren(['n','s','st','in','v','t'])",
+        "n": {
+          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 12"
+        },
+        "s": {
+          ".validate": "newData.isNumber() && newData.val() >= 100 && newData.val() <= 600000"
+        },
+        "st": {
+          ".validate": "newData.isNumber()"
+        },
+        "in": {
+          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 120000"
+        },
+        "v": {
+          ".validate": "newData.val() === 1"
+        },
+        "t": {
+          ".validate": "newData.val() === now"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  },
+  "hidden": {
+    ".read": true
+  }
+}
