@@ -53,17 +53,19 @@ ex('受け取ったブースターでステージ1を一瞬でクリア',await c
 ex('受け取ったブースターを投げなおす',await post(U[3],'p3aaaaaaaaaaaaaa','回すよ',4),true);
 ex('すでに持っている人は受け取れない',await claim(U[4],'p3aaaaaaaaaaaaaa',1,4),false);
 // ===== 宇宙の果て =====
-const frec=(st,s,b,p,n='テスト')=>({n,s,p,b,st,in:'A'+Math.round(s*60/1000),v:2,t:TS});
+const frec=(st,s,b,p,n='テスト')=>({n,s,p,b,st,v:2,t:TS});
+const far=(uid,r,noIn)=>{const o={};o['far/'+uid]=r;if(!noIn)o['farIn/'+uid]={st:r.st,in:'A'+Math.round(r.s*60/1000)};return req('PATCH','chikyu',uid,o);};
 tk=await ticket(U[1]);await sleep(1100);
-ex('ステージ4をクリアしていない人の宇宙の果て',await req('PUT','chikyu/far/'+U[1],U[1],frec(tk.st,1000,13,6000)),false);
+ex('ステージ4をクリアしていない人の宇宙の果て',await far(U[1],frec(tk.st,1000,13,6000)),false);
 // U[1] にステージ3・4をクリアさせる（3段目・4段目のブースター）
 ex('ステージ3のクリア',await clear(U[1],3,7),true);
 ex('ステージ4のクリア',await clear(U[1],4,10),true);
 tk=await ticket(U[1]);await sleep(1100);
-ex('宇宙の果ての記録（4段目ブースターは不可）',await req('PUT','chikyu/far/'+U[1],U[1],frec(tk.st,1000,10,6000)),false);
-ex('宇宙の果ての記録',await req('PUT','chikyu/far/'+U[1],U[1],frec(tk.st,1000,13,6000)),true);
-ex('名前だけ変える',await req('PUT','chikyu/far/'+U[1],U[1],frec(tk.st,1000,13,6000,'なまえ')),true);
-ex('名前を変えるふりで距離を変える',await req('PUT','chikyu/far/'+U[1],U[1],frec(tk.st,1000,13,7000,'なまえ')),false);
+ex('宇宙の果ての記録（4段目ブースターは不可）',await far(U[1],frec(tk.st,1000,10,6000)),false);
+ex('宇宙の果ての記録',await far(U[1],frec(tk.st,1000,13,6000)),true);
+ex('名前だけ変える',await far(U[1],frec(tk.st,1000,13,6000,'なまえ')),true);
+ex('操作の記録なしで宇宙の果ての記録',await (async()=>{const tk2=await ticket(U[1]);await sleep(1100);return far(U[1],frec(tk2.st,1000,13,6500),true);})(),false);
+ex('名前を変えるふりで距離を変える',await far(U[1],frec(tk.st,1000,13,7000,'なまえ')),false);
 ex('だれでもランキングを読める',await req('GET','chikyu/far',null),true);
 ex('hidden に書く',await req('PUT','chikyu/hidden/'+U[1],U[1],true),false);
 ex('ほかのゲームの場所に書く',await req('PUT','hk/all/scores/'+U[1],U[1],{n:'x'}),false);

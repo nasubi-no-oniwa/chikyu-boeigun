@@ -56,9 +56,12 @@
   function create(seed, stage, bid) {
     stage = stage || 1; if (bid == null) bid = (stage - 1) * 3 + 1;
     const B = boost(bid);
-    return { tick: 0, stage, B, x: 0, z: AH * 0.45, face: 24, moving: false,
+    const o = { tick: 0, stage, B, x: 0, z: AH * 0.45, face: 24, moving: false,
       u: 0, du: B.sp / 100 * tierF(B.tier, stage) / NOM, ksp: B.sp / 100, lat: B.ag / 100 * EV0,
       ms: [], nid: 1, next: 70, pnext: 0, R: rng(seed), dead: false, clear: false, ev: [] };
+    // 上の段のブースター：数秒で突き抜ける。そのあいだ隕石がどっと来るが、正面から砕ける
+    if (B.tier > stage) { const S = o; S.over = true; S.du = 1 / (TICK * (B.tier - stage === 1 ? 3 : 1.5)); S.ksp = 3.5; S.next = 6; S.lat = EV0 * 1.6; }
+    return o;
   }
   const lerp = (a, b, k) => a + (b - a) * k;
   // u は 1 をこえても（宇宙の果て）むずかしくなり続ける
@@ -143,8 +146,13 @@
       } else if (S.tick === m.ti && m.ti > m.t0) S.ev.push({ e: 'go', m });
       m.x += m.vx; m.z += m.vz;
       const dx = S.x - m.x, dz = S.z - m.z, rr = m.r * .9 + ER;
-      if (dx * dx + dz * dz < rr * rr && !S.dead) { S.dead = true; S.by = m; S.ev.push({ e: 'dead', m }); }
+      if (dx * dx + dz * dz < rr * rr && !S.dead && !m.gone) {
+        // そのステージより上の段のブースターなら、正面から砕ける
+        if (S.B.tier > S.stage) { m.gone = true; S.ev.push({ e: 'smash', m }); }
+        else { S.dead = true; S.by = m; S.ev.push({ e: 'dead', m }); }
+      }
     }
+    if (S.B.tier > S.stage) S.ms = S.ms.filter(m => !m.gone);
     if (S.tick >= END && !S.dead) { S.dead = true; S.ev.push({ e: 'dead', m: null }); }
     if (S.tick % 20 === 0) S.ms = S.ms.filter(m => S.tick < m.ti || (m.z < AH + 3 && m.x > -AW - 4 && m.x < AW + 4 && m.z > -AH - 8));
     return S;

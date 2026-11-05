@@ -11,10 +11,10 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>地球防衛軍</title>
+<title>地球の脱走劇</title>
 <meta name="description" content="地球を動かして隕石をよけ、太陽系→天の川→アンドロメダ→銀河の網の目→宇宙の果てへ。どこまで逃げられる？">
-<meta property="og:title" content="地球防衛軍">
-<meta property="og:description" content="地球を動かして隕石をよけ、太陽系→天の川→アンドロメダ→銀河の網の目→宇宙の果てへ。どこまで逃げられる？">
+<meta property="og:title" content="地球の脱走劇">
+<meta property="og:description" content="手足の生えた地球を動かして隕石をよけ、太陽系→天の川→アンドロメダ→銀河の網の目→宇宙の果てへ。どこまで逃げられる？">
 <meta property="og:image" content="https://nasubi-no-oniwa.github.io/chikyu-boeigun/ogp.png">
 <meta property="og:url" content="https://nasubi-no-oniwa.github.io/chikyu-boeigun/">
 <meta name="twitter:card" content="summary_large_image">
@@ -190,10 +190,10 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 
 // ===== ことば（日本語・英語・繁体中文・韓国語） =====
 const TX={
-ja:{title:'<em>地球</em>防衛軍',hud:'地球防衛軍',
+ja:{title:'<em>地球</em>の脱走劇',hud:'地球の脱走劇',
  how:'地球を動かして、隕石をよけながら宇宙の果てへ逃げます。ぷにコンで移動。1回でも当たったら木っ端みじん。ステージをクリアすると、次のステージと、その先用のブースターが手に入ります。',
  pcHow:'WASD・矢印キーで移動',
- name:'なまえ（12文字まで）',anon:'名無しの防衛隊員',start:'出撃する',rank:'ランキング',bbs:'掲示板',
+ name:'なまえ（12文字まで）',anon:'名無しの脱走者',start:'出撃する',rank:'ランキング',bbs:'掲示板',
  stageH:'ステージ',boostH:'ブースター',locked:'🔒 前のステージをクリアで開く',cleared:'クリア済み',clrN:'クリア {n}人',
  stages:['太陽系脱出','天の川銀河脱出','アンドロメダ銀河脱出','銀河の網の目','宇宙の果て'],
  tiers:['太陽系用','天の川用','アンドロメダ用','網の目用','宇宙の果て用'],
@@ -224,11 +224,11 @@ ja:{title:'<em>地球</em>防衛軍',hud:'地球防衛軍',
  bWait:'あと {n} 秒で書きこめます',bEmpty:'まだ書きこみがありません',bDone:'書きこみました',bErr:'書きこめませんでした',bBad:'その言葉は書きこめません',
  take:'受け取る（残り{n}人）',taken:'受け取りました',have:'もう持っている',full:'受け取りおわり',mine:'自分が投げたもの',takeErr:'受け取れませんでした',
  ago:{s:'{n}秒前',m:'{n}分前',h:'{n}時間前',d:'{n}日前'},
- postDead:'地球、「{s}」の途中で木っ端みじん\n{p}まで（{d}）',postClear:'地球が「{s}」を突破した！\n{t}秒・{b}',postFar:'地球を {d} 先まで逃がした\n到達「{p}」',tags:'#地球防衛軍'},
-en:{title:'Earth <em>Defense</em> Force',hud:'Earth Defense Force',
+ postDead:'地球、「{s}」の途中で木っ端みじん\n{p}まで（{d}）',postClear:'地球が「{s}」を突破した！\n{t}秒・{b}',postFar:'地球を {d} 先まで逃がした\n到達「{p}」',tags:'#地球の脱走劇'},
+en:{title:'The Great <em>Earth</em> Escape',hud:'The Great Earth Escape',
  how:'Move the Earth, dodge the meteors and flee to the edge of the universe. Use the stick to move. One hit and Earth is blown to bits. Clear a stage to unlock the next one and new boosters.',
  pcHow:'WASD / arrow keys to move',
- name:'Name (up to 12)',anon:'Anonymous defender',start:'Launch',rank:'Ranking',bbs:'Board',
+ name:'Name (up to 12)',anon:'Anonymous escapee',start:'Launch',rank:'Ranking',bbs:'Board',
  stageH:'Stage',boostH:'Booster',locked:'🔒 Clear the previous stage',cleared:'Cleared',clrN:'{n} cleared',
  stages:['Escape the Solar System','Escape the Milky Way','Escape Andromeda','The Cosmic Web','The Edge of the Universe'],
  tiers:['Solar class','Milky Way class','Andromeda class','Cosmic Web class','Edge class'],
@@ -259,11 +259,11 @@ en:{title:'Earth <em>Defense</em> Force',hud:'Earth Defense Force',
  bWait:'You can post in {n} s',bEmpty:'No posts yet',bDone:'Posted',bErr:'Could not post',bBad:'You can’t post that',
  take:'Take ({n} left)',taken:'Taken',have:'Already have it',full:'All taken',mine:'Yours',takeErr:'Could not take it',
  ago:{s:'{n}s ago',m:'{n}m ago',h:'{n}h ago',d:'{n}d ago'},
- postDead:'Earth blown to bits in "{s}"\nReached {p} ({d})',postClear:'Earth got through "{s}"!\n{t}s with {b}',postFar:'Got the Earth {d} away\nReached "{p}"',tags:'#地球防衛軍'},
-zh:{title:'<em>地球</em>防衛軍',hud:'地球防衛軍',
+ postDead:'Earth blown to bits in "{s}"\nReached {p} ({d})',postClear:'Earth got through "{s}"!\n{t}s with {b}',postFar:'Got the Earth {d} away\nReached "{p}"',tags:'#地球の脱走劇'},
+zh:{title:'<em>地球</em>大逃亡',hud:'地球大逃亡',
  how:'移動地球，閃開隕石，逃向宇宙盡頭。用搖桿移動。被撞到一次就粉身碎骨。過關就能打開下一關，還能拿到更遠用的推進器。',
  pcHow:'WASD・方向鍵移動',
- name:'名字（12字以內）',anon:'無名防衛隊員',start:'出擊',rank:'排行榜',bbs:'留言板',
+ name:'名字（12字以內）',anon:'無名逃亡者',start:'出擊',rank:'排行榜',bbs:'留言板',
  stageH:'關卡',boostH:'推進器',locked:'🔒 過了前一關才會打開',cleared:'已過關',clrN:'過關 {n}人',
  stages:['逃出太陽系','逃出銀河系','逃出仙女座星系','宇宙網','宇宙盡頭'],
  tiers:['太陽系用','銀河系用','仙女座用','宇宙網用','宇宙盡頭用'],
@@ -294,11 +294,11 @@ zh:{title:'<em>地球</em>防衛軍',hud:'地球防衛軍',
  bWait:'{n} 秒後可以留言',bEmpty:'還沒有留言',bDone:'已留言',bErr:'無法留言',bBad:'這個字詞不能用',
  take:'領取（剩{n}人）',taken:'已領取',have:'已經有了',full:'已領完',mine:'自己丟的',takeErr:'無法領取',
  ago:{s:'{n}秒前',m:'{n}分前',h:'{n}小時前',d:'{n}天前'},
- postDead:'地球在「{s}」途中粉身碎骨\n到{p}（{d}）',postClear:'地球突破了「{s}」！\n{t}秒・{b}',postFar:'讓地球逃到了 {d} 之外\n到達「{p}」',tags:'#地球防衛軍'},
-ko:{title:'<em>지구</em> 방위군',hud:'지구 방위군',
+ postDead:'地球在「{s}」途中粉身碎骨\n到{p}（{d}）',postClear:'地球突破了「{s}」！\n{t}秒・{b}',postFar:'讓地球逃到了 {d} 之外\n到達「{p}」',tags:'#地球の脱走劇'},
+ko:{title:'<em>지구</em> 대탈주',hud:'지구 대탈주',
  how:'지구를 움직여 운석을 피하며 우주의 끝으로 도망칩니다. 스틱으로 이동. 한 번이라도 맞으면 산산조각. 스테이지를 클리어하면 다음 스테이지와 더 먼 곳용 부스터를 얻습니다.',
  pcHow:'WASD·방향키로 이동',
- name:'이름 (12자까지)',anon:'이름 없는 방위대원',start:'출격',rank:'랭킹',bbs:'게시판',
+ name:'이름 (12자까지)',anon:'이름 없는 탈주자',start:'출격',rank:'랭킹',bbs:'게시판',
  stageH:'스테이지',boostH:'부스터',locked:'🔒 앞 스테이지를 클리어하면 열림',cleared:'클리어',clrN:'클리어 {n}명',
  stages:['태양계 탈출','은하수 탈출','안드로메다 탈출','우주 거미줄','우주의 끝'],
  tiers:['태양계용','은하수용','안드로메다용','거미줄용','우주 끝용'],
@@ -329,7 +329,7 @@ ko:{title:'<em>지구</em> 방위군',hud:'지구 방위군',
  bWait:'{n}초 후에 쓸 수 있어요',bEmpty:'아직 글이 없어요',bDone:'썼습니다',bErr:'쓰지 못했습니다',bBad:'그 말은 쓸 수 없어요',
  take:'받기 (남은 {n}명)',taken:'받았습니다',have:'이미 있음',full:'마감',mine:'내가 던진 것',takeErr:'받지 못했습니다',
  ago:{s:'{n}초 전',m:'{n}분 전',h:'{n}시간 전',d:'{n}일 전'},
- postDead:'지구, 「{s}」 도중에 산산조각\n{p}까지 ({d})',postClear:'지구가 「{s}」를 돌파했다!\n{t}초·{b}',postFar:'지구를 {d} 너머까지 도망시켰다\n도달 "{p}"',tags:'#地球防衛軍'}};
+ postDead:'지구, 「{s}」 도중에 산산조각\n{p}까지 ({d})',postClear:'지구가 「{s}」를 돌파했다!\n{t}초·{b}',postFar:'지구를 {d} 너머까지 도망시켰다\n도달 "{p}"',tags:'#地球の脱走劇'}};
 const LANGS=[['ja','日本語'],['en','English'],['zh','繁中'],['ko','한국어']];
 let lang=(q=>['ja','en','zh','ko'].includes(q)?q:null)(new URLSearchParams(location.search).get('lang'))||ls.get('cb_lang',null)||(n=>n.startsWith('ja')?'ja':n.startsWith('zh')?'zh':n.startsWith('ko')?'ko':'en')((navigator.language||'ja').toLowerCase());
 const t=(k,o)=>{let s=(TX[lang]||TX.ja)[k];if(s==null)s=TX.ja[k];if(o)for(const [a,b] of Object.entries(o))s=String(s).split('{'+a+'}').join(b);return s;};
@@ -418,6 +418,7 @@ const SFX={
  whoosh(){if(!ac())return;const n=AC.currentTime;noise(n,.35,'bandpass',600,1.5,.18,2400);},
  warp(){if(!ac())return;const n=AC.currentTime;noise(n,2.2,'bandpass',200,2,.5,6000);tone(n,110,2,'sawtooth',.12,1760);[523,659,784,1047,1319,1568].forEach((f,i)=>tone(n+.9+i*.1,f,.6,'triangle',.15));},
  boom(){if(!ac())return;const n=AC.currentTime;noise(n,2.2,'lowpass',2600,.6,1,60);tone(n,80,1.6,'sine',.9,24);noise(n,.25,'bandpass',3600,1,.5);for(let i=1;i<6;i++)noise(n+i*.13,.4,'lowpass',900,.8,.35/i,120);},
+ smash(){if(!ac())return;const n=AC.currentTime;noise(n,.4,'lowpass',1800,.8,.6,200);tone(n,160,.25,'square',.12,60);},
  coin(){if(!ac())return;const n=AC.currentTime;tone(n,988,.1,'square',.08);tone(n+.08,1319,.3,'square',.08);},
  droneOn(){if(!ac()||drone)return;const c=AC,g=c.createGain();g.gain.value=.0001;g.connect(master);const os=[55,82.4,110.3].map((f,i)=>{const o=c.createOscillator();o.type=i?'sine':'triangle';o.frequency.value=f;o.connect(g);o.start();return o;});g.gain.exponentialRampToValueAtTime(.05,c.currentTime+1.5);drone={g,os};},
  droneOff(){if(!drone)return;const d=drone;drone=null;const n=AC.currentTime;d.g.gain.cancelScheduledValues(n);d.g.gain.setValueAtTime(Math.max(.0001,d.g.gain.value),n);d.g.gain.exponentialRampToValueAtTime(.0001,n+.4);d.os.forEach(o=>o.stop(n+.45));}
@@ -633,7 +634,13 @@ function blowUp(x,z,seed){
  flash={m:new THREE.Mesh(new THREE.SphereGeometry(1,24,16),fm),age:0};flash.m.position.set(x,.55,z);S3.add(flash.m);
  shake=1.2;
 }
+// 上の段のブースターで隕石を砕いたとき
+const DEB=new THREE.MeshStandardMaterial({color:0x9a8a7a,roughness:.9,flatShading:true});
+function smashFx(m){const q=prng(m.id*7+3);
+ for(let i=0;i<10;i++){const c=new THREE.Mesh(chunkG,DEB);c.scale.setScalar(m.r*(.15+q()*.2));c.position.set(m.x,.55,m.z);S3.add(c);const a=q()*6.28,sp=2+q()*4;FX.push({m:c,vx:Math.cos(a)*sp,vy:q()*3,vz:Math.sin(a)*sp-2,rx:q()*8,ry:q()*8,life:1.2});}
+ shake=Math.min(1,shake+.25);}
 function stepFx(dt){
+ FX=FX.filter(f=>{if(f.life==null)return true;f.life-=dt;if(f.life<=0){S3.remove(f.m);return false;}return true;});
  for(const f of FX){f.m.position.x+=f.vx*dt;f.m.position.y+=f.vy*dt;f.m.position.z+=f.vz*dt;f.m.rotation.x+=f.rx*dt;f.m.rotation.y+=f.ry*dt;}
  if(flash){flash.age+=dt;const a=flash.age;flash.m.scale.setScalar(.5+a*5);flash.m.material.opacity=Math.max(0,1-a/.7);if(a>.8){S3.remove(flash.m);flash.m.material.dispose();flash.m.geometry.dispose();flash=null;}}
 }
@@ -702,7 +709,7 @@ function tickOnce(){
  handleEv(S.ev,S);
  if(S.dead)onDead();else if(S.clear)onClear();
 }
-function handleEv(ev,S){for(const x of ev){if(x.e==='warn'&&x.m.ti>x.m.t0)SFX.warn();else if(x.e==='go'&&x.m.k!=='peb')SFX.whoosh();}
+function handleEv(ev,S){for(const x of ev){if(x.e==='warn'&&x.m.ti>x.m.t0)SFX.warn();else if(x.e==='go'&&x.m.k!=='peb')SFX.whoosh();else if(x.e==='smash'){smashFx(x.m);SFX.smash();}}
  const p=EB.passed(S.stage,S.u);if(p>L.passed){const from=L.passed;L.passed=p;if(S.clear||p-from>1)return;const k=MARKS[S.stage][p-1][0];
   const belt=EB.STAGES[S.stage].belts.some(b=>Math.abs(b[0]-S.u)<.015);
   if(k==='helio'){flashText(t('escape'),'',2400);SFX.pass(true);}else{flashText(t('pass',{p:markName(S.stage,p-1)}),belt?t('beltIn'):'',1800);SFX.pass(false);}}}
@@ -714,7 +721,7 @@ function onDead(){
 }
 function onClear(){
  mode='clear';L.clearT=0;SFX.droneOff();SFX.warp();
- const fast=L.S.tick<60;
+ const fast=!!L.S.over;
  L.res={kind:'clear',ms:EB.ms(L.S.tick),stage:L.stage,u:1,b:L.bid,first:!cleared(L.stage)};
  bigText(fast?t('instant'):stName(L.stage)+' '+t('clearBig'),markName(L.stage,MARKS[L.stage].length-1));
  submitClear();
@@ -830,7 +837,8 @@ async function syncProg(){
   if(ch){saveProg();if(mode==='title')drawPick();}
  }catch(e){}
 }
-async function loadCounts(){try{const r=await Promise.all([1,2,3,4].map(s=>fetch(DB('clr/'+s)+'.json?shallow=true').then(x=>x.ok?x.json():undefined).catch(()=>undefined)));r.forEach((j,i)=>{if(j!==undefined)clrCount[i+1]=j?Object.keys(j).length:0;});if(mode==='title')drawPick();}catch(e){}}
+let countsAt=0;
+async function loadCounts(){if(Date.now()-countsAt<60000)return;countsAt=Date.now();try{const r=await Promise.all([1,2,3,4].map(s=>fetch(DB('clr/'+s)+'.json?shallow=true').then(x=>x.ok?x.json():undefined).catch(()=>undefined)));r.forEach((j,i)=>{if(j!==undefined)clrCount[i+1]=j?Object.keys(j).length:0;});if(mode==='title')drawPick();}catch(e){}}
 fbAuth().then(syncProg).catch(()=>{});
 // ずる対策：始める前にサーバーの時計で「始めます」を書く。その時刻で障害物の並びが決まる
 function takeTicket(){
@@ -869,8 +877,9 @@ async function submitFar(){
  try{const a=await fbAuth();
   const cur=await getJ('far/'+a.uid).catch(()=>null);
   if(cur&&cur.p>=p){setMsg(t('notbetter'),'');return;}
-  const rec={n:myName(),s:r.ms,p,b:r.b,st:L.st,in:EB.enc(L.D),v:EB.V,t:{'.sv':'timestamp'}};L.sent=rec;
-  const res=await PUT('far/'+a.uid,a,rec);
+  const rec={n:myName(),s:r.ms,p,b:r.b,st:L.st,v:EB.V,t:{'.sv':'timestamp'}};L.sent=rec;
+  const body={};body['far/'+a.uid]=rec;body['farIn/'+a.uid]={st:L.st,in:EB.enc(L.D)};
+  const res=await PATCH(a,body);
   if(res.status===401||res.status===403){setMsg(t('late'),'err');return;}
   if(!res.ok)throw new Error('put '+res.status);
   sendState.canRename=true;const rk=await myRank(a.uid);setMsg(t('sent',{r:rk||'?'}),'ok');
@@ -889,7 +898,7 @@ $('renameBtn').onclick=async()=>{
 };
 $('nameIn').addEventListener('change',()=>{const n=$('nameIn').value.trim();if(n&&badName(n)){$('nameIn').value='';return;}ls.set('cb_name',n);});
 async function loadBoard(){
- const [d,h]=await Promise.all([fetch(DB('far')+'.json?orderBy=%22p%22&limitToLast=300').then(r=>{if(!r.ok)throw 0;return r.json()}),getJ('hidden').catch(()=>null)]);
+ const [d,h]=await Promise.all([fetch(DB('far')+'.json?orderBy=%22p%22&limitToLast=100').then(r=>{if(!r.ok)throw 0;return r.json()}),getJ('hidden').catch(()=>null)]);
  return Object.entries(d||{}).map(([id,v])=>({...v,id})).filter(r=>!(h&&h[r.id])&&typeof r.p==='number').sort((a,b)=>b.p-a.p||a.t-b.t);
 }
 async function myRank(uid){try{const rows=await loadBoard();const i=rows.findIndex(r=>r.id===uid);return i>=0?i+1:null;}catch(e){return null;}}
@@ -906,7 +915,8 @@ async function openRank(fromResult){
   box.innerHTML=h+'</table>';
  }catch(e){box.innerHTML='<p>'+esc(t('rankerr'))+'</p>';}
 }
-$('rankBox').onclick=e=>{const b=e.target.closest('button[data-i]');if(!b)return;startReplay(rankRows[+b.dataset.i]);};
+$('rankBox').onclick=async e=>{const b=e.target.closest('button[data-i]');if(!b)return;const r=rankRows[+b.dataset.i];b.disabled=true;
+ try{const fi=await getJ('farIn/'+r.id);if(fi&&fi.st===r.st)startReplay({...r,in:fi.in});else b.disabled=false;}catch(_){b.disabled=false;}};
 
 // ===== 掲示板 =====
 let bbsRows=[],bbsClaims={},nextPostAt=ls.get('cb_lp',0),bbsTimer=0;
@@ -925,10 +935,10 @@ async function openBbs(){
 }
 async function loadBbs(){
  const box=$('bbsList');if(!bbsRows.length)box.innerHTML='<p>'+esc(t('loading'))+'</p>';
- try{const [d,h]=await Promise.all([fetch(DB('bbs')+'.json?orderBy=%22t%22&limitToLast=100').then(r=>{if(!r.ok)throw 0;return r.json()}),getJ('hidden').catch(()=>null)]);
+ try{const [d,h]=await Promise.all([fetch(DB('bbs')+'.json?orderBy=%22t%22&limitToLast=30').then(r=>{if(!r.ok)throw 0;return r.json()}),getJ('hidden').catch(()=>null)]);
   bbsRows=Object.entries(d||{}).map(([id,v])=>({...v,id})).filter(r=>!(h&&h[r.id])).sort((a,b)=>b.t-a.t);
   const gifts=bbsRows.filter(r=>typeof r.g==='number');
-  const cl=await Promise.all(gifts.map(r=>getJ('claim/'+r.id).catch(()=>null)));gifts.forEach((r,i)=>bbsClaims[r.id]=cl[i]||{});
+  if(gifts.length){const k0=gifts.map(r=>r.id).sort()[0];const cl=await fetch(DB('claim')+'.json?orderBy=%22$key%22&startAt=%22'+encodeURIComponent(k0)+'%22').then(r=>r.ok?r.json():null).catch(()=>null)||{};gifts.forEach(r=>bbsClaims[r.id]=cl[r.id]||{});}
   drawBbs();
  }catch(e){box.innerHTML='<p>'+esc(t('rankerr'))+'</p>';}
 }
@@ -942,7 +952,8 @@ function drawBbs(){
    g='<div class="gift"><span>🎁 '+esc(bFull(r.g))+'</span>'+btn+'</div>';}
   return '<div class="post"><div class="h"><b>'+esc(r.n)+'</b>　'+esc(ago(r.t))+'</div><div class="x">'+esc(r.x)+'</div>'+g+'</div>';}).join('');
 }
-const rid=()=>{const A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';let s='';const a=new Uint32Array(20);crypto.getRandomValues(a);for(const x of a)s+=A[x%A.length];return s;};
+// 書きこみのID：前に時刻（古い順に並ぶ）、うしろに乱数
+const rid=()=>{const A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';let s=Date.now().toString(36).padStart(9,'0');const a=new Uint32Array(12);crypto.getRandomValues(a);for(const x of a)s+=A[x%A.length];return s;};
 $('bPost').onclick=async()=>{
  const x=$('bText').value.trim(),m=$('bMsg');if(!x)return;
  if(badName(x)){m.textContent=t('bBad');m.className='note err';m.dataset.k='';return;}

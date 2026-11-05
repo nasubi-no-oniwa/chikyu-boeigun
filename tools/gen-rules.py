@@ -22,21 +22,25 @@ R={
    ".write":"auth != null && auth.uid === $uid && newData.exists() && (!data.exists() || now - data.child('t').val() >= 2000)",
    ".validate":"newData.hasChildren(['t'])","t":{".validate":"newData.val() === now"},"$other":{".validate":False}}},
  # ステージ1〜4を初めてクリアした記録
- "clr":{".read":True,"$stage":{"$uid":{
+ "clr":{".read":True,"$stage":{".indexOn":["t"],"$uid":{
    ".write":f"auth != null && auth.uid === $uid && !data.exists() && newData.exists() && {TIME} && {unlocked('$stage','$uid')} && {own(B,'$uid')}",
    ".validate":"newData.hasChildren(['s','st','in','b','v','t']) && $stage.length === 1 && $stage >= '1' && $stage <= '4'",
    "s":num(50,900000),"st":{".validate":"newData.isNumber()"},
    "in":{".validate":"newData.isString() && newData.val().length >= 1 && newData.val().length <= 160000"},
    "b":intb,"v":{".validate":"newData.val() === 2"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}}},
  # 宇宙の果てのランキング（p：距離の点）
- "far":{".read":True,".indexOn":["p"],"$uid":{
-   ".write":f"auth != null && auth.uid === $uid && newData.exists() && (({TIME} && {clr(4,'$uid')} && {own(B,'$uid')} && (!data.exists() || (newData.child('st').val() > data.child('st').val() && newData.child('p').val() > data.child('p').val()))) || (data.exists() && newData.child('st').val() === data.child('st').val() && newData.child('s').val() === data.child('s').val() && newData.child('p').val() === data.child('p').val() && newData.child('b').val() === data.child('b').val() && newData.child('in').val() === data.child('in').val()))",
-   ".validate":"newData.hasChildren(['n','s','p','b','st','in','v','t'])",
+ "far":{".read":True,".indexOn":["p","t"],"$uid":{
+   ".write":f"auth != null && auth.uid === $uid && newData.exists() && newData.parent().parent().child('farIn/' + $uid + '/st').val() === newData.child('st').val() && (({TIME} && {clr(4,'$uid')} && {own(B,'$uid')} && (!data.exists() || (newData.child('st').val() > data.child('st').val() && newData.child('p').val() > data.child('p').val()))) || (data.exists() && newData.child('st').val() === data.child('st').val() && newData.child('s').val() === data.child('s').val() && newData.child('p').val() === data.child('p').val() && newData.child('b').val() === data.child('b').val()))",
+   ".validate":"newData.hasChildren(['n','s','p','b','st','v','t'])",
    "n":{".validate":"newData.isString() && newData.val().length >= 1 && newData.val().length <= 12"},
    "s":num(100,900000),"p":num(1,900000*60),"st":{".validate":"newData.isNumber()"},
-   "in":{".validate":"newData.isString() && newData.val().length >= 1 && newData.val().length <= 160000"},
    "b":{".validate":"newData.isNumber() && newData.val() >= 12 && newData.val() <= 14 && newData.val() % 1 === 0"},
    "v":{".validate":"newData.val() === 2"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}},
+ # 宇宙の果ての操作の記録（ランキングを開くときには読まない。再生するときだけ読む）
+ "farIn":{"$uid":{".read":True,
+   ".write":"auth != null && auth.uid === $uid && newData.exists() && newData.parent().parent().child('far/' + $uid + '/st').val() === newData.child('st').val()",
+   ".validate":"newData.hasChildren(['st','in'])","st":{".validate":"newData.isNumber()"},
+   "in":{".validate":"newData.isString() && newData.val().length >= 1 && newData.val().length <= 160000"},"$other":{".validate":False}}},
  # 掲示板
  "lp":{"$uid":{".write":"auth != null && auth.uid === $uid && newData.val() === now && (!data.exists() || now - data.val() >= 20000)"}},
  "gave":{"$uid":{".read":"auth != null && auth.uid === $uid","$t":{".write":"auth != null && auth.uid === $uid && !data.exists() && newData.val() === now && $t >= 't2' && $t <= 't5' && $t.length === 2"}}},
