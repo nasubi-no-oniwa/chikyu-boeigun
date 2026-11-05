@@ -25,6 +25,8 @@ tk=await ticket(U[1]);await sleep(300);
 ex('実際の時間より長いクリア',await req('PUT','chikyu/clr/1/'+U[1],U[1],crec(tk.st,5000,1)),false);
 ex('ステージ1のクリア（1段目のブースター）',await clear(U[1],1,1),true);
 ex('同じステージのクリアをもう一度',await clear(U[1],1,1),false);
+ex('広さが大きすぎる記録',await (async()=>{const tk2=await ticket(U[7]);await sleep(450);return req('PUT','chikyu/clr/1/'+U[7],U[7],{...crec(tk2.st,300,1),v:3,w:12});})(),false);
+ex('広さつきの新しい形の記録',await (async()=>{const tk2=await ticket(U[7]);await sleep(450);return req('PUT','chikyu/clr/1/'+U[7],U[7],{...crec(tk2.st,300,1),v:3,w:8.2});})(),true);
 ex('ステージ2のクリア（2段目のブースター）',await clear(U[1],2,4),true);
 ex('ステージ5は無い（クリアの記録）',await clear(U[1],5,13),false);
 ex('だれでもクリアの記録を読める',await req('GET','chikyu/clr/1',null),true);

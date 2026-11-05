@@ -27,7 +27,7 @@ R={
    ".validate":"newData.hasChildren(['s','st','in','b','v','t']) && $stage.length === 1 && $stage >= '1' && $stage <= '4'",
    "s":num(50,900000),"st":{".validate":"newData.isNumber()"},
    "in":{".validate":"newData.isString() && newData.val().length >= 1 && newData.val().length <= 160000"},
-   "b":intb,"v":{".validate":"newData.val() === 2"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}}},
+   "b":intb,"v":{".validate":"newData.val() === 2 || newData.val() === 3"},"w":{".validate":"newData.isNumber() && newData.val() >= 3.4 && newData.val() <= 10"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}}},
  # 宇宙の果てのランキング（p：距離の点）
  "far":{".read":True,".indexOn":["p","t"],"$uid":{
    ".write":f"auth != null && auth.uid === $uid && newData.exists() && newData.parent().parent().child('farIn/' + $uid + '/st').val() === newData.child('st').val() && (({TIME} && {clr(4,'$uid')} && {own(B,'$uid')} && (!data.exists() || (newData.child('st').val() > data.child('st').val() && newData.child('p').val() > data.child('p').val()))) || (data.exists() && newData.child('st').val() === data.child('st').val() && newData.child('s').val() === data.child('s').val() && newData.child('p').val() === data.child('p').val() && newData.child('b').val() === data.child('b').val()))",
@@ -35,7 +35,7 @@ R={
    "n":{".validate":"newData.isString() && newData.val().length >= 1 && newData.val().length <= 12"},
    "s":num(100,900000),"p":num(1,900000*60),"st":{".validate":"newData.isNumber()"},
    "b":{".validate":"newData.isNumber() && newData.val() >= 12 && newData.val() <= 14 && newData.val() % 1 === 0"},
-   "v":{".validate":"newData.val() === 2"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}},
+   "v":{".validate":"newData.val() === 2 || newData.val() === 3"},"w":{".validate":"newData.isNumber() && newData.val() >= 3.4 && newData.val() <= 10"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}},
  # 宇宙の果ての操作の記録（ランキングを開くときには読まない。再生するときだけ読む）
  "farIn":{"$uid":{".read":True,
    ".write":"auth != null && auth.uid === $uid && newData.exists() && newData.parent().parent().child('far/' + $uid + '/st').val() === newData.child('st').val()",

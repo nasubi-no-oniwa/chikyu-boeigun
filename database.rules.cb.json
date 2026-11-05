@@ -34,7 +34,10 @@
           ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 14 && newData.val() % 1 === 0"
         },
         "v": {
-          ".validate": "newData.val() === 2"
+          ".validate": "newData.val() === 2 || newData.val() === 3"
+        },
+        "w": {
+          ".validate": "newData.isNumber() && newData.val() >= 3.4 && newData.val() <= 10"
         },
         "t": {
           ".validate": "newData.val() === now"
@@ -70,7 +73,10 @@
         ".validate": "newData.isNumber() && newData.val() >= 12 && newData.val() <= 14 && newData.val() % 1 === 0"
       },
       "v": {
-        ".validate": "newData.val() === 2"
+        ".validate": "newData.val() === 2 || newData.val() === 3"
+      },
+      "w": {
+        ".validate": "newData.isNumber() && newData.val() >= 3.4 && newData.val() <= 10"
       },
       "t": {
         ".validate": "newData.val() === now"

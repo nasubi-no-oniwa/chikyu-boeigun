@@ -1,13 +1,16 @@
-// 地球防衛軍：地球の動きと障害物の計算（ゲームと記録の確認で同じものを使う）
+// 地球の脱走劇：地球の動きと障害物の計算（ゲームと記録の確認で同じものを使う）
 // 1秒 = 60コマ。同じ「始めた時刻」「ステージ」「ブースター」「操作」なら、どの端末でも必ず同じ結果になる
 (function (root) {
   const TICK = 60;
-  const AW = 3.4, AH = 6;        // 動ける広さの半分（横6.8 × 縦12）
+  const AW = 3.4, AH = 6;        // 動ける広さの半分（横はもっと広くできる：画面の形に合わせる）
+  const WMAX = 10;               // 横の広さの半分の上限
   const ER = 0.42;               // 地球の当たりの大きさ
   const EV0 = 5.4 / TICK;        // 地球の横の速さ（身軽さ100のとき）
   const NOM = 120 * TICK;        // バランス型でステージを抜けるのにかかるコマ数（120秒）
   const END = 900 * TICK;        // 900秒で打ち止め
-  const V = 2;                   // 計算の版
+  const V = 3;                   // 計算の版（2：広さ固定・ブーストなし／3：広さ w・ブーストあり）
+  const BT = 90;                 // ブースト1回のコマ数（1.5秒）
+  const BN = 3;                  // 1ステージで使えるブーストの回数
   const DIR = [[1,0],[0.980785,0.19509],[0.92388,0.382683],[0.83147,0.55557],[0.707107,0.707107],[0.55557,0.83147],[0.382683,0.92388],[0.19509,0.980785],[0,1],[-0.19509,0.980785],[-0.382683,0.92388],[-0.55557,0.83147],[-0.707107,0.707107],[-0.83147,0.55557],[-0.92388,0.382683],[-0.980785,0.19509],[-1,0],[-0.980785,-0.19509],[-0.92388,-0.382683],[-0.83147,-0.55557],[-0.707107,-0.707107],[-0.55557,-0.83147],[-0.382683,-0.92388],[-0.19509,-0.980785],[0,-1],[0.19509,-0.980785],[0.382683,-0.92388],[0.55557,-0.83147],[0.707107,-0.707107],[0.83147,-0.55557],[0.92388,-0.382683],[0.980785,-0.19509]];
 
   // ===== ブースター =====
@@ -50,13 +53,13 @@
   }
   // サーバーの時刻から障害物の並びを決める
   function seedOf(st) { return ((st % 4294967296) ^ 0x2c1b3c6d) >>> 0; }
-  const clampX = x => Math.max(-AW + ER, Math.min(AW - ER, x));
   const clampZ = z => Math.max(-AH + ER, Math.min(AH - ER, z));
 
-  function create(seed, stage, bid) {
+  function create(seed, stage, bid, w) {
     stage = stage || 1; if (bid == null) bid = (stage - 1) * 3 + 1;
     const B = boost(bid);
-    const o = { tick: 0, stage, B, x: 0, z: AH * 0.45, face: 24, moving: false,
+    w = Math.max(AW, Math.min(WMAX, w || AW));
+    const o = { tick: 0, stage, B, AW: w, wk: w / AW, boosts: BN, bt: 0, x: 0, z: AH * 0.45, face: 24, moving: false,
       u: 0, du: B.sp / 100 * tierF(B.tier, stage) / NOM, ksp: B.sp / 100, lat: B.ag / 100 * EV0,
       ms: [], nid: 1, next: 70, pnext: 0, R: rng(seed), dead: false, clear: false, ev: [] };
     // 上の段のブースター：数秒で突き抜ける。そのあいだ隕石がどっと来るが、正面から砕ける
@@ -77,10 +80,11 @@
     return m;
   }
   function spawn(S) {
-    const R = S.R, st = STAGES[S.stage], k0 = kOf(S.u), k1 = Math.min(1, k0), bs = base(S), top = -AH - 1.4;
+    const R = S.R, st = STAGES[S.stage], k0 = kOf(S.u), k1 = Math.min(1, k0), bs = base(S), top = -AH - 1.4, AW = S.AW;
     const rx = () => (R() * 2 - 1) * (AW - .2);
     let sum = 0; const W = [];
-    for (const k of KINDS) { const w = st.w[k]; const v = S.u >= w[2] ? lerp(w[0], w[1], k1) : 0; W.push(v); sum += v; }
+    // 広い画面では、地球めがけて来る隕石は増やさない
+    for (const k of KINDS) { const w = st.w[k]; let v = S.u >= w[2] ? lerp(w[0], w[1], k1) : 0; if (k === 'aim' || k === 'wall') v /= S.wk; W.push(v); sum += v; }
     let p = R() * sum, k = 'rock';
     for (let i = 0; i < KINDS.length; i++) { p -= W[i]; if (p < 0) { k = KINDS[i]; break; } }
     const wt = n => Math.max(30, Math.round(n - k1 * 14));
@@ -93,11 +97,15 @@
     } else if (k === 'aim') {
       add(S, k, rx(), top, 0, 0, .42, wt(46));
     } else if (k === 'wall') {
-      const gap = Math.max(1.75, 2.5 - k1 * .6), gc = (R() * 2 - 1) * (AW - gap / 2 - .2);
-      const n = 9, vz = bs * .8;
+      const gap = Math.max(1.75, 2.5 - k1 * .6);
+      // すき間：ふつうの広さは1つ。広い画面では広さに合わせて増やす（区切りごとに1つ）
+      const ng = Math.max(1, Math.round(S.wk)), gcs = [];
+      if (ng === 1) gcs.push((R() * 2 - 1) * (AW - gap / 2 - .2));
+      else for (let j = 0; j < ng; j++) { const a = -AW + j * (AW * 2 / ng), b = a + AW * 2 / ng; gcs.push(a + gap / 2 + .2 + R() * Math.max(0, b - a - gap - .4)); }
+      const n = Math.round(9 * S.wk), vz = bs * .8;
       for (let i = 0; i < n; i++) {
         const x = -AW + (i + .5) * (AW * 2 / n);
-        if (Math.abs(x - gc) < gap / 2 + .2) continue;
+        if (gcs.some(gc => Math.abs(x - gc) < gap / 2 + .2)) continue;
         add(S, k, x, top, 0, vz, .38, 0);
       }
     } else if (k === 'side') {
@@ -107,21 +115,25 @@
       add(S, k, (R() * 2 - 1) * (AW - 1), top - .8, 0, bs * .5, .5, 0);
     }
     const g = lerp(st.g[0], st.g[1], k1) * Math.max(.6, 1 - Math.max(0, k0 - 1) * .7);
-    const gap = Math.max(7, Math.round(g / S.ksp));
+    // 広いほど、たくさん出る
+    const gap = Math.max(7, Math.round(g / S.ksp / S.wk));
     // 壁のあとは少し間をあける（次の壁のすき間まで動けるように）
     S.next = S.tick + gap + Math.floor(R() * gap * .5) + (k === 'wall' ? Math.round(36 / S.ksp) : 0);
   }
   function pebble(S, b) {
-    const R = S.R, bs = base(S);
+    const R = S.R, bs = base(S), AW = S.AW;
     add(S, 'peb', (R() * 2 - 1) * (AW - .1), -AH - 1.2, (R() * 2 - 1) * .3 / TICK, bs * (1 + R() * .5), .2 + R() * .17, 0, true);
-    S.pnext = S.tick + Math.max(6, Math.round(b[2] / S.ksp)) + Math.floor(R() * 6);
+    S.pnext = S.tick + Math.max(6, Math.round(b[2] / S.ksp / S.wk)) + Math.floor(R() * 6);
   }
 
-  // 1コマ進める。d：0＝止まる / 1〜32＝方向
-  function step(S, d) {
+  // 1コマ進める。d：0＝止まる / 1〜32＝方向、bo：ブーストを押した
+  function step(S, d, bo) {
     if (S.dead || S.clear) return S;
+    const AW = S.AW;
     S.ev.length = 0;
     S.tick++;
+    // ブースト：1.5秒だけ急加速。そのあいだは隕石を砕ける
+    if (bo && S.boosts > 0 && S.bt <= 0 && !S.over) { S.boosts--; S.bt = BT; S.ev.push({ e: 'boost' }); }
     const dir = d > 0 && d <= 32 ? d - 1 : -1;
     S.moving = dir >= 0;
     if (dir >= 0) { S.face = dir; const v = DIR[dir]; S.x += v[0] * S.lat; S.z += v[1] * S.lat; }
@@ -131,9 +143,10 @@
       const dx = m.x - S.x, dz = m.z - S.z, d2 = dx * dx + dz * dz;
       if (d2 < 12.25 && d2 > 1e-6) { const l = Math.sqrt(d2), f = Math.min(.05, .045 / d2); S.x += dx / l * f; S.z += dz / l * f; }
     }
-    S.x = clampX(S.x); S.z = clampZ(S.z);
-    // 進む
-    S.u += S.du;
+    S.x = Math.max(-AW + ER, Math.min(AW - ER, S.x)); S.z = clampZ(S.z);
+    // 進む（ブースト中は4倍）
+    S.u += S.bt > 0 ? S.du * 4 : S.du;
+    if (S.bt > 0) S.bt--;
     if (S.stage < 5 && S.u >= 1) { S.u = 1; S.clear = true; S.ev.push({ e: 'clear' }); return S; }
     if (S.tick >= S.next) spawn(S);
     const b = inBelt(S);
@@ -148,11 +161,11 @@
       const dx = S.x - m.x, dz = S.z - m.z, rr = m.r * .9 + ER;
       if (dx * dx + dz * dz < rr * rr && !S.dead && !m.gone) {
         // そのステージより上の段のブースターなら、正面から砕ける
-        if (S.B.tier > S.stage) { m.gone = true; S.ev.push({ e: 'smash', m }); }
+        if (S.over || S.bt > 0) { m.gone = true; S.ev.push({ e: 'smash', m }); }
         else { S.dead = true; S.by = m; S.ev.push({ e: 'dead', m }); }
       }
     }
-    if (S.B.tier > S.stage) S.ms = S.ms.filter(m => !m.gone);
+    if (S.over || S.bt > 0 || S.ev.length) S.ms = S.ms.filter(m => !m.gone);
     if (S.tick >= END && !S.dead) { S.dead = true; S.ev.push({ e: 'dead', m: null }); }
     if (S.tick % 20 === 0) S.ms = S.ms.filter(m => S.tick < m.ti || (m.z < AH + 3 && m.x > -AW - 4 && m.x < AW + 4 && m.z > -AH - 8));
     return S;
@@ -160,40 +173,50 @@
 
   // 操作の記録 ⇔ 文字
   const AL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg';
-  function enc(D) {
+  // BO：ブーストを押したコマの番号の並び（なくてもよい）
+  function enc(D, BO) {
     let s = '', i = 0;
     while (i < D.length) { let j = i; while (j < D.length && D[j] === D[i]) j++; s += AL[D[i]] + (j - i > 1 ? (j - i) : ''); i = j; }
+    if (BO && BO.length) { let last = 0; s += '~' + BO.map(k => { const d = (k - last).toString(36); last = k; return d; }).join('.'); }
     return s;
   }
+  // 戻り値：{ D, B }（B：ブーストを押したコマなら 1）
   function dec(str) {
     if (typeof str !== 'string' || str.length > 160000) return null;
+    const [a, b] = str.split('~');
     const D = [];
     const re = /([A-Za-g])(\d*)/g; let m, used = 0;
-    while ((m = re.exec(str))) {
+    while ((m = re.exec(a))) {
       if (m.index !== used) return null; used = re.lastIndex;
       const v = AL.indexOf(m[1]); if (v < 0) return null;
       const n = m[2] ? +m[2] : 1; if (n < 1 || D.length + n > END + 10) return null;
       for (let k = 0; k < n; k++) D.push(v);
     }
-    if (used !== str.length) return null;
-    return D;
+    if (used !== a.length) return null;
+    const B = new Uint8Array(D.length);
+    if (b) { let last = 0; for (const x of b.split('.')) { const d = parseInt(x, 36); if (!(d >= 0)) return null; last += d; if (last >= D.length) return null; B[last] = 1; } }
+    return { D, B };
   }
   function ms(n) { return Math.round(n * 1000 / TICK); }
-  // 宇宙の果ての距離の点（コマ × 速さ。整数）
+  // 宇宙の果ての距離の点（整数）。版2：コマ × 速さ／版3：進んだ量（ブースト込み）
   const ptsOf = (tick, bid) => tick * TYPES[bid % 3].sp;
+  const farP = S => Math.round(S.u * NOM * 100);
   // 記録の確かめ。stage 1〜4：クリアの記録 / 5：宇宙の果ての記録
   function run(r, stage) {
-    if (!r || r.v !== V || typeof r.st !== 'number' || typeof r.b !== 'number' || !(r.b >= 0 && r.b < NB && r.b % 1 === 0)) return null;
-    const D = dec(r.in); if (!D || !D.length) return null;
-    const S = create(seedOf(r.st), stage, r.b);
-    for (let i = 0; i < D.length; i++) { step(S, D[i]); if ((S.dead || S.clear) && i < D.length - 1) return null; }
+    if (!r || (r.v !== 2 && r.v !== 3) || typeof r.st !== 'number' || typeof r.b !== 'number' || !(r.b >= 0 && r.b < NB && r.b % 1 === 0)) return null;
+    const o = dec(r.in); if (!o || !o.D.length) return null;
+    if (r.v === 2 && o.B.some(x => x)) return null;
+    const w = r.v === 2 ? AW : r.w;
+    if (typeof w !== 'number' || !(w >= AW && w <= WMAX)) return null;
+    const S = create(seedOf(r.st), stage, r.b, w);
+    for (let i = 0; i < o.D.length; i++) { step(S, o.D[i], o.B[i]); if ((S.dead || S.clear) && i < o.D.length - 1) return null; }
     return S;
   }
   function checkClear(r, stage) {
     try { const S = run(r, stage); return !!S && S.clear && ms(S.tick) === r.s; } catch (e) { return false; }
   }
   function checkFar(r) {
-    try { const S = run(r, 5); return !!S && S.dead && ms(S.tick) === r.s && Math.floor(r.b / 3) === 4 && r.p === ptsOf(S.tick, r.b); } catch (e) { return false; }
+    try { const S = run(r, 5); return !!S && S.dead && ms(S.tick) === r.s && Math.floor(r.b / 3) === 4 && r.p === (r.v === 2 ? ptsOf(S.tick, r.b) : farP(S)); } catch (e) { return false; }
   }
 
   // ===== 距離（光年）。各ステージ [u, 光年] を対数でつなぐ =====
@@ -225,7 +248,7 @@
   // 宇宙の果ての記録の u
   const farU = p => p / 100 / NOM;
 
-  const EB = { TICK, AW, AH, ER, NOM, END, V, DIR, TYPES, NB, STAGES, KINDS, boost, tierF, create, step, enc, dec, ms, seedOf, base, inBelt,
+  const EB = { TICK, AW, AH, WMAX, BT, BN, farP, ER, NOM, END, V, DIR, TYPES, NB, STAGES, KINDS, boost, tierF, create, step, enc, dec, ms, seedOf, base, inBelt,
     checkClear, checkFar, ptsOf, lyAt, MARKS, passed, farU, AU };
   if (typeof module !== 'undefined' && module.exports) module.exports = EB;
   else root.EB = EB;
