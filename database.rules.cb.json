@@ -172,6 +172,14 @@
       }
     }
   },
+  "rep": {
+    ".read": true,
+    "$pid": {
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.val() === now && root.child('chikyu/bbs/' + $pid).exists()"
+      }
+    }
+  },
   "hidden": {
     ".read": true
   }

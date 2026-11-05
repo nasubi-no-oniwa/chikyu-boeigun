@@ -37,5 +37,13 @@ const old = now - 7 * 864e5;
 const ob = (await get('/chikyu/bbs.json?orderBy=%22t%22&endAt=' + old + '&limitToFirst=500')) || {};
 let pr = 0;
 for (const pid of Object.keys(ob)) { pr++; await api('DELETE', '/chikyu/bbs/' + pid + '.json', undefined, tk); await api('DELETE', '/chikyu/claim/' + pid + '.json', undefined, tk); }
+// 3人から通報された書きこみを消す
+const reps = (await get('/chikyu/rep.json')) || {};
+let rp = 0;
+for (const [pid, v] of Object.entries(reps)) {
+  if (Object.keys(v || {}).length >= 3) { rp++; await api('DELETE', '/chikyu/bbs/' + pid + '.json', undefined, tk); await api('DELETE', '/chikyu/claim/' + pid + '.json', undefined, tk); }
+  if (Object.keys(v || {}).length >= 3 || ob[pid]) await api('DELETE', '/chikyu/rep/' + pid + '.json', undefined, tk);
+}
+console.log('通報で消した', rp, '件');
 await api('PUT', '/chikyu/meta/chk.json', JSON.stringify(meta), tk);
 console.log('確かめた', n, '件 / 消した', rm, '件 / 古い書きこみを消した', pr, '件');

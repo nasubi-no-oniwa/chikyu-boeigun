@@ -67,6 +67,8 @@ R={
    ".write":"auth != null && auth.uid === $uid && !data.exists() && newData.exists() && newData.parent().parent().parent().child('claim/' + newData.child('p').val() + '/' + newData.child('s').val()).val() === auth.uid"
      + " && (" + " || ".join([f"($bk === 'b{b}' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === {b})" for b in range(3,15)]) + ")",
    ".validate":"newData.hasChildren(['p','s','t'])","p":{".validate":"newData.isString()"},"s":{".validate":"newData.isString()"},"t":{".validate":"newData.val() === now"},"$other":{".validate":False}}}},
+ # 通報（1人1回。3人で隠し、記録の確認のときに消す）
+ "rep":{".read":True,"$pid":{"$uid":{".write":"auth != null && auth.uid === $uid && !data.exists() && newData.val() === now && root.child('chikyu/bbs/' + $pid).exists()"}}},
  "hidden":{".read":True}
 }
 open('database.rules.cb.json','w').write(json.dumps(R,ensure_ascii=False,indent=2)+'\n')

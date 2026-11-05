@@ -97,6 +97,7 @@ table.rank tr.me td{background:#1f2f70}
 .post{border-bottom:1px solid #222b55;padding:8px 2px;font-size:14px;line-height:1.5}
 .post .h{font-size:11px;color:var(--sub)}.post .h b{color:var(--ink);font-size:12px}
 .post .x{word-break:break-all;white-space:pre-wrap}
+.post .rp{float:right;background:none;border:none;color:var(--sub);font-size:11px;padding:2px 4px;margin:0;width:auto;box-shadow:none;text-decoration:underline}
 .gift{margin-top:5px;background:#2a2108;border:2px solid #a8822a;border-radius:10px;padding:6px 8px;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:6px}
 .gift button{margin:0;width:auto;padding:6px 10px;font-size:12px;background:var(--gold);flex:none}
 .new{color:var(--ok);font-weight:900}
@@ -194,11 +195,7 @@ table.rank tr.me td{background:#1f2f70}
 <script src="sim.js"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module">
-import * as THREE from 'three';
-import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
-import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
-import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
-import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 const $=id=>document.getElementById(id);
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const GAME_URL='https://nasubi-no-oniwa.github.io/chikyu-boeigun/';
@@ -243,7 +240,7 @@ ja:{title:'<em>地球</em>の脱走劇',hud:'地球の脱走劇',
  replaying:'{n} さんの最後',shareHint:'保存した動画を、Xの投稿に貼ってね',vfail:'この端末では動画をつくれませんでした',vmade:'できました',
  bTitle:'掲示板',bPh:'書きこむ（60文字まで・20秒に1回）',bPost:'書きこむ',bNoGift:'ブースターは投げない',bGiftOpt:'投げる：{b}',bGiftNote:'ブースターは段ごとに1回だけ投げられます。自分のはなくなりません。先着5人が受け取れます。',
  bWait:'あと {n} 秒で書きこめます',bEmpty:'まだ書きこみがありません',bDone:'書きこみました',bErr:'書きこめませんでした',bBad:'その言葉は書きこめません',
- take:'受け取る（残り{n}人）',taken:'受け取りました',have:'もう持っている',full:'受け取りおわり',mine:'自分が投げたもの',takeErr:'受け取れませんでした',
+ report:'通報',reported:'通報しました',repAsk:'この書きこみを通報しますか？（3人に通報されると消えます）',take:'受け取る（残り{n}人）',taken:'受け取りました',have:'もう持っている',full:'受け取りおわり',mine:'自分が投げたもの',takeErr:'受け取れませんでした',
  ago:{s:'{n}秒前',m:'{n}分前',h:'{n}時間前',d:'{n}日前'},
  postDead:'地球、「{s}」の途中で木っ端みじん\n{p}まで（{d}）',postClear:'地球が「{s}」を突破した！\n{t}秒・{b}',postFar:'地球を {d} 先まで逃がした\n到達「{p}」',tags:'#地球の脱走劇'},
 en:{title:'The Great <em>Earth</em> Escape',hud:'The Great Earth Escape',
@@ -278,7 +275,7 @@ en:{title:'The Great <em>Earth</em> Escape',hud:'The Great Earth Escape',
  replaying:'{n}’s last moments',shareHint:'Attach the saved video to your post on X',vfail:'This device can’t make videos',vmade:'Done',
  bTitle:'Board',bPh:'Write something (up to 60, once every 20 s)',bPost:'Post',bNoGift:'No booster',bGiftOpt:'Throw: {b}',bGiftNote:'You can throw one booster per class, once. You keep yours. The first 5 people can take it.',
  bWait:'You can post in {n} s',bEmpty:'No posts yet',bDone:'Posted',bErr:'Could not post',bBad:'You can’t post that',
- take:'Take ({n} left)',taken:'Taken',have:'Already have it',full:'All taken',mine:'Yours',takeErr:'Could not take it',
+ report:'Report',reported:'Reported',repAsk:'Report this post? (It disappears after 3 reports)',take:'Take ({n} left)',taken:'Taken',have:'Already have it',full:'All taken',mine:'Yours',takeErr:'Could not take it',
  ago:{s:'{n}s ago',m:'{n}m ago',h:'{n}h ago',d:'{n}d ago'},
  postDead:'Earth blown to bits in "{s}"\nReached {p} ({d})',postClear:'Earth got through "{s}"!\n{t}s with {b}',postFar:'Got the Earth {d} away\nReached "{p}"',tags:'#地球の脱走劇'},
 zh:{title:'<em>地球</em>大逃亡',hud:'地球大逃亡',
@@ -313,7 +310,7 @@ zh:{title:'<em>地球</em>大逃亡',hud:'地球大逃亡',
  replaying:'{n} 的最後',shareHint:'把儲存的影片貼到X的貼文裡',vfail:'這台裝置無法製作影片',vmade:'完成',
  bTitle:'留言板',bPh:'留言（60字以內・每20秒1次）',bPost:'留言',bNoGift:'不丟推進器',bGiftOpt:'丟出：{b}',bGiftNote:'推進器每一段只能丟1次。自己的不會不見。前5名可以領取。',
  bWait:'{n} 秒後可以留言',bEmpty:'還沒有留言',bDone:'已留言',bErr:'無法留言',bBad:'這個字詞不能用',
- take:'領取（剩{n}人）',taken:'已領取',have:'已經有了',full:'已領完',mine:'自己丟的',takeErr:'無法領取',
+ report:'檢舉',reported:'已檢舉',repAsk:'要檢舉這則留言嗎？（被3人檢舉就會消失）',take:'領取（剩{n}人）',taken:'已領取',have:'已經有了',full:'已領完',mine:'自己丟的',takeErr:'無法領取',
  ago:{s:'{n}秒前',m:'{n}分前',h:'{n}小時前',d:'{n}天前'},
  postDead:'地球在「{s}」途中粉身碎骨\n到{p}（{d}）',postClear:'地球突破了「{s}」！\n{t}秒・{b}',postFar:'讓地球逃到了 {d} 之外\n到達「{p}」',tags:'#地球の脱走劇'},
 ko:{title:'<em>지구</em> 대탈주',hud:'지구 대탈주',
@@ -348,7 +345,7 @@ ko:{title:'<em>지구</em> 대탈주',hud:'지구 대탈주',
  replaying:'{n} 님의 마지막',shareHint:'저장한 영상을 X 게시물에 붙여 주세요',vfail:'이 기기에서는 영상을 만들 수 없습니다',vmade:'완료',
  bTitle:'게시판',bPh:'글쓰기 (60자까지·20초에 1번)',bPost:'쓰기',bNoGift:'부스터 안 던짐',bGiftOpt:'던지기: {b}',bGiftNote:'부스터는 단계마다 1번만 던질 수 있어요. 내 것은 없어지지 않아요. 선착순 5명이 받을 수 있어요.',
  bWait:'{n}초 후에 쓸 수 있어요',bEmpty:'아직 글이 없어요',bDone:'썼습니다',bErr:'쓰지 못했습니다',bBad:'그 말은 쓸 수 없어요',
- take:'받기 (남은 {n}명)',taken:'받았습니다',have:'이미 있음',full:'마감',mine:'내가 던진 것',takeErr:'받지 못했습니다',
+ report:'신고',reported:'신고했습니다',repAsk:'이 글을 신고할까요? (3명이 신고하면 사라집니다)',take:'받기 (남은 {n}명)',taken:'받았습니다',have:'이미 있음',full:'마감',mine:'내가 던진 것',takeErr:'받지 못했습니다',
  ago:{s:'{n}초 전',m:'{n}분 전',h:'{n}시간 전',d:'{n}일 전'},
  postDead:'지구, 「{s}」 도중에 산산조각\n{p}까지 ({d})',postClear:'지구가 「{s}」를 돌파했다!\n{t}초·{b}',postFar:'지구를 {d} 너머까지 도망시켰다\n도달 "{p}"',tags:'#地球の脱走劇'}};
 const LANGS=[['ja','日本語'],['en','English'],['zh','繁中'],['ko','한국어']];
@@ -455,9 +452,17 @@ const BGC=[0,0x05060c,0x0a0618,0x05051a,0x030209,0x120508];
 S3.background=new THREE.Color(BGC[1]);
 const cam=new THREE.PerspectiveCamera(38,1,.1,400);
 const TILT=.30,TGT=new THREE.Vector3(0,0,.3);let camD=24,punch=0;
-// 光のにじみ（光るものがふわっと輝く）
-const composer=new EffectComposer(R);composer.setPixelRatio(Math.min(devicePixelRatio,1.5));composer.addPass(new RenderPass(S3,cam));
-const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.75,.45,.82);composer.addPass(bloom);composer.addPass(new OutputPass());
+// 光のにじみ（光るものがふわっと輝く）。後から読み込み、使えないブラウザや重い端末では使わない
+// 画質 QL：2＝全部 / 1＝にじみなし・火の粉少なめ / 0＝さらに星雲なし・画素を減らす
+let PP=null,composer=null,QL=Math.min(2,ls.get('cb_q',2)+1);
+function bloomPasses(rr,w,h){const c=new PP.EffectComposer(rr);c.addPass(new PP.RenderPass(S3,cam));c.addPass(new PP.UnrealBloomPass(new THREE.Vector2(w,h),.75,.45,.82));c.addPass(new PP.OutputPass());return c;}
+function makeComposer(){if(composer){composer.dispose&&composer.dispose();composer=null;}if(!PP||QL<2)return;composer=bloomPasses(R,256,256);composer.setPixelRatio(Math.min(devicePixelRatio,1.5));composer.setSize(innerWidth,innerHeight);}
+function applyQuality(){makeComposer();R.setPixelRatio(QL>0?Math.min(devicePixelRatio,2):1);R.setSize(innerWidth,innerHeight,false);if(typeof NEB!=='undefined')NEB.visible=QL>0;}
+if(window.HTMLScriptElement&&HTMLScriptElement.supports&&HTMLScriptElement.supports('importmap'))
+ Promise.all(['EffectComposer','RenderPass','UnrealBloomPass','OutputPass'].map(n=>import('three/addons/postprocessing/'+n+'.js'))).then(m=>{PP=Object.assign({},...m);makeComposer();}).catch(e=>console.warn('にじみなし',e));
+// 重さを見張る：3秒ずつ平均をとり、カクついていたら1段ずつ軽くする
+const perf={t:0,n:0};
+function watchPerf(rdt){if(mode!=='play'||QL<=0)return;perf.t+=rdt;perf.n++;if(perf.t>=3){const fps=perf.n/perf.t;perf.t=0;perf.n=0;if(fps<40){QL--;ls.set('cb_q',QL);applyQuality();console.log('軽くしました',QL,fps.toFixed(0));}}}
 S3.add(new THREE.HemisphereLight(0xcfe0ff,0x101020,.55));
 const sunL=new THREE.DirectionalLight(0xfff1d0,2.1);sunL.position.set(-2,6,9);S3.add(sunL);
 function canvasTex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;return tx;}
@@ -498,7 +503,7 @@ function setTheme(st){
  if(st===3){for(let i=0;i<5;i++)bgPlane(galTex,5+i,5+i,(i%2?1:-1)*(6+i*1.5),-14+i*7,i,.35);}
  if(st===4)bgPlane(webTex,70,70,0,0,0,.6);
  if(st===5){bgPlane(webTex,80,80,0,0,1,.35);const r=bgPlane(haloTex,70,70,0,-20,0,.18);r.material.color.setHex(0xff8040);}
- sunG.visible=st===1;setNebula(st);
+ sunG.visible=st===1;setNebula(st);NEB.visible=QL>0;
 }
 
 // ===== 地球（スーパーマンのように手足が生えている） =====
@@ -675,7 +680,7 @@ function scrollNeb(v){for(const m of NEB.children){m.position.z+=v*.12;if(m.posi
 // ブースターの火の粉
 const SPARK=[];for(let i=0;i<90;i++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));s.visible=false;S3.add(s);SPARK.push(s);}
 let sparkI=0;
-function emitSpark(x,z,tier,n){for(let k=0;k<n;k++){const s=SPARK[sparkI++%SPARK.length];s.visible=true;s.position.set(x+(Math.random()-.5)*.25,.5,z+1.3);const life=.3+Math.random()*.3;s.userData={vx:(Math.random()-.5)*1.4,vz:4+Math.random()*6,life,max:life};s.material.color.setHex(FLAME_COL[(tier||1)-1]);}}
+function emitSpark(x,z,tier,n){n=QL>=2?n:QL===1?Math.ceil(n/2):(Math.random()<.3?1:0);for(let k=0;k<n;k++){const s=SPARK[sparkI++%SPARK.length];s.visible=true;s.position.set(x+(Math.random()-.5)*.25,.5,z+1.3);const life=.3+Math.random()*.3;s.userData={vx:(Math.random()-.5)*1.4,vz:4+Math.random()*6,life,max:life};s.material.color.setHex(FLAME_COL[(tier||1)-1]);}}
 function stepSparks(dt){for(const s of SPARK){if(!s.visible)continue;const u=s.userData;u.life-=dt;if(u.life<=0){s.visible=false;continue;}s.position.x+=u.vx*dt;s.position.z+=u.vz*dt;const k=u.life/u.max;s.scale.setScalar(.12+.4*k);s.material.opacity=k;}}
 // スピードの線（速いほど長く、ワープでは光の線になる）
 const STN=70,stg=new THREE.BufferGeometry(),stp=new Float32Array(STN*6),stz=[];
@@ -684,7 +689,7 @@ stg.setAttribute('position',new THREE.BufferAttribute(stp,3));
 const streak=new THREE.LineSegments(stg,new THREE.LineBasicMaterial({color:0xcfe6ff,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));S3.add(streak);
 function stepStreaks(v,str){const len=Math.min(16,.15+v*5+str*2.5);
  for(let i=0;i<STN;i++){const o=stz[i];o.z+=v*2.4;if(o.z>18){o.z-=48;o.x=(Math.random()*2-1)*(AW+9);}stp.set([o.x,o.y,o.z,o.x,o.y,o.z-len],i*6);}
- stg.attributes.position.needsUpdate=true;streak.material.opacity=Math.min(str>0?.7:.4,v*1.6+str*.2);}
+ stg.attributes.position.needsUpdate=true;streak.visible=QL>0||str>0;streak.material.opacity=Math.min(str>0?.7:.4,v*1.6+str*.2);}
 // 衝撃波の輪
 const ringG=new THREE.RingGeometry(.86,1,64);let SHK=[];
 function shock(x,z,col,size){const m=new THREE.Mesh(ringG,new THREE.MeshBasicMaterial({color:col,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));m.rotation.x=-Math.PI/2;m.position.set(x,.5,z);S3.add(m);SHK.push({m,age:0,size});}
@@ -719,7 +724,7 @@ function stepFx(dt){
 }
 function clearFx(){for(const f of FX)S3.remove(f.m);FX=[];for(const k of SHK){S3.remove(k.m);k.m.material.dispose();}SHK=[];for(const s of SPARK)s.visible=false;if(flash){S3.remove(flash.m);flash=null;}for(const v of [...VIS.values()])dropVis(v);earth.visible=true;eShadow.visible=true;}
 
-function fit(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);composer.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix();fitTo(.72,-.97);}
+function fit(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);if(composer)composer.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix();fitTo(.72,-.97);}
 function fitTo(top,bot){
  const pts=[[-AW-.2,-AH-.2],[AW+.2,-AH-.2],[-AW-.2,AH+.2],[AW+.2,AH+.2]];let lo=6,hi=90;
  for(let i=0;i<30;i++){const d=(lo+hi)/2;placeCam(d,0);cam.updateMatrixWorld();let ok=true;
@@ -817,7 +822,7 @@ function updHud(S){
 // ===== 毎フレーム =====
 let last=performance.now(),clock=0;
 function frame(now){
- const rdt=Math.min(.1,(now-last)/1000);last=now;clock+=rdt;
+ const rdt=Math.min(.1,(now-last)/1000);last=now;clock+=rdt;watchPerf(rdt);
  if(mode==='video'){requestAnimationFrame(frame);return;}
  let dt=rdt;
  if(mode==='count'){L.countT+=dt;const k=L.countT;
@@ -847,7 +852,7 @@ function render(dt,rdt){
  }
  stepFx(dt);stepSparks(dt);stepShock(dt);
  shake=Math.max(0,shake-rdt*2);punch=Math.max(0,punch-rdt*2.5);placeCam(camD*(1-.05*punch),shake*.45);
- if(mode!=='video')composer.render();
+ if(mode!=='video'){if(composer)composer.render();else R.render(S3,cam);}
 }
 
 // ===== 画面の切りかえ =====
@@ -1001,7 +1006,7 @@ $('rankBox').onclick=async e=>{const b=e.target.closest('button[data-i]');if(!b)
  try{const fi=await getJ('farIn/'+r.id);if(fi&&fi.st===r.st)startReplay({...r,in:fi.in});else b.disabled=false;}catch(_){b.disabled=false;}};
 
 // ===== 掲示板 =====
-let bbsRows=[],bbsClaims={},nextPostAt=ls.get('cb_lp',0),bbsTimer=0;
+let bbsRows=[],bbsReps={},bbsClaims={},nextPostAt=ls.get('cb_lp',0),bbsTimer=0;
 $('bbsBtn').onclick=()=>openBbs();$('bBack').onclick=()=>{clearInterval(bbsTimer);showTitle();};
 function giftOpts(){const opts=['<option value="">'+esc(t('bNoGift'))+'</option>'];
  for(let b=3;b<15;b++){const tr=Math.floor(b/3)+1;if(owned(b)&&!prog.gave.includes(tr))opts.push('<option value="'+b+'">'+esc(t('bGiftOpt',{b:bFull(b)}))+'</option>');}
@@ -1019,6 +1024,8 @@ async function loadBbs(){
  const box=$('bbsList');if(!bbsRows.length)box.innerHTML='<p>'+esc(t('loading'))+'</p>';
  try{const [d,h]=await Promise.all([fetch(DB('bbs')+'.json?orderBy=%22t%22&limitToLast=30').then(r=>{if(!r.ok)throw 0;return r.json()}),getJ('hidden').catch(()=>null)]);
   bbsRows=Object.entries(d||{}).map(([id,v])=>({...v,id})).filter(r=>!(h&&h[r.id])).sort((a,b)=>b.t-a.t);
+  // 通報：3人から通報された書きこみは隠す
+  if(bbsRows.length){const k0=bbsRows.map(r=>r.id).sort()[0];bbsReps=await fetch(DB('rep')+'.json?orderBy=%22$key%22&startAt=%22'+encodeURIComponent(k0)+'%22').then(r=>r.ok?r.json():null).catch(()=>null)||{};bbsRows=bbsRows.filter(r=>Object.keys(bbsReps[r.id]||{}).length<3);}
   const gifts=bbsRows.filter(r=>typeof r.g==='number');
   if(gifts.length){const k0=gifts.map(r=>r.id).sort()[0];const cl=await fetch(DB('claim')+'.json?orderBy=%22$key%22&startAt=%22'+encodeURIComponent(k0)+'%22').then(r=>r.ok?r.json():null).catch(()=>null)||{};gifts.forEach(r=>bbsClaims[r.id]=cl[r.id]||{});}
   drawBbs();
@@ -1032,7 +1039,8 @@ function drawBbs(){
   if(typeof r.g==='number'&&r.g>=3&&r.g<15){const c=bbsClaims[r.id]||{},n=Object.keys(c).length,mine=Object.values(c).includes(myId);
    const btn=r.u===myId?'<small>'+esc(t('mine'))+'</small>':mine?'<small>'+esc(t('taken'))+'</small>':owned(r.g)?'<small>'+esc(t('have'))+'</small>':n>=5?'<small>'+esc(t('full'))+'</small>':'<button data-take="'+esc(r.id)+'">'+esc(t('take',{n:5-n}))+'</button>';
    g='<div class="gift"><span>🎁 '+esc(bFull(r.g))+'</span>'+btn+'</div>';}
-  return '<div class="post"><div class="h"><b>'+esc(r.n)+'</b>　'+esc(ago(r.t))+'</div><div class="x">'+esc(r.x)+'</div>'+g+'</div>';}).join('');
+  const rp=r.u===myId?'':(bbsReps[r.id]||{})[myId]?'<span class="rp">'+esc(t('reported'))+'</span>':'<button class="rp" data-rep="'+esc(r.id)+'">'+esc(t('report'))+'</button>';
+  return '<div class="post">'+rp+'<div class="h"><b>'+esc(r.n)+'</b>　'+esc(ago(r.t))+'</div><div class="x">'+esc(r.x)+'</div>'+g+'</div>';}).join('');
 }
 // 書きこみのID：前に時刻（古い順に並ぶ）、うしろに乱数
 const rid=()=>{const A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';let s=Date.now().toString(36).padStart(9,'0');const a=new Uint32Array(12);crypto.getRandomValues(a);for(const x of a)s+=A[x%A.length];return s;};
@@ -1052,6 +1060,9 @@ $('bPost').onclick=async()=>{
  }catch(e){console.warn(e);m.textContent=t('bErr');m.className='note err';m.dataset.k='';nextPostAt=Date.now()+3000;}
 };
 $('bbsList').onclick=async e=>{
+ const rb=e.target.closest('button[data-rep]');
+ if(rb){const pid=rb.dataset.rep;if(!confirm(t('repAsk')))return;rb.disabled=true;
+  try{const a=await fbAuth();const r=await PUT('rep/'+pid+'/'+a.uid,a,{'.sv':'timestamp'});if(!r.ok)throw new Error('rep '+r.status);(bbsReps[pid]=bbsReps[pid]||{})[a.uid]=Date.now();drawBbs();}catch(err){console.warn(err);rb.disabled=false;}return;}
  const b=e.target.closest('button[data-take]');if(!b)return;const pid=b.dataset.take,row=bbsRows.find(r=>r.id===pid);if(!row)return;b.disabled=true;
  try{const a=await fbAuth();const c=await getJ('claim/'+pid).catch(()=>null)||{};
   let slot=0;for(let k=1;k<=5;k++)if(!c[k]){slot=k;break;}
@@ -1092,7 +1103,7 @@ async function makeVideo(){
  show(null);mode='video';$('recBadge').hidden=false;$('recBadge').textContent='● '+t('making');
  const g=can.getContext('2d');
  const VR=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});VR.setSize(VW,VH,false);VR.setPixelRatio(1);
- const VC=new EffectComposer(VR);VC.setSize(VW,VH);VC.addPass(new RenderPass(S3,cam));VC.addPass(new UnrealBloomPass(new THREE.Vector2(VW,VH),.75,.45,.82));VC.addPass(new OutputPass());
+ const VC=PP&&QL>=2?bloomPasses(VR,VW,VH):null;if(VC)VC.setSize(VW,VH);
  const oldA=cam.aspect;cam.aspect=VW/VH;cam.updateProjectionMatrix();fitTo(.62,-.72);
  ac();const dest=AC.createMediaStreamDestination();lp.connect(dest);
  const stream=can.captureStream(30);dest.stream.getAudioTracks().forEach(tr=>stream.addTrack(tr));
@@ -1115,7 +1126,7 @@ async function makeVideo(){
    else if(dT!=null){dt=rdt*slowK(dT);dT+=dt;if(dT>DEAD_END&&endAt==null)endAt=now;}
    else{cT+=rdt;L.clearT=cT;if(cT>CLEAR_END&&endAt==null)endAt=now;}
    L.acc=dT==null&&cT==null?acc:0;
-   render(dt,rdt);VC.render();g.drawImage(VR.domElement,0,0,VW,VH);
+   render(dt,rdt);if(VC)VC.render();else VR.render(S3,cam);g.drawImage(VR.domElement,0,0,VW,VH);
    g.textAlign='center';g.lineJoin='round';g.lineWidth=8;g.strokeStyle='#000b';const txt=(s,x,y)=>{g.strokeText(s,x,y);g.fillText(s,x,y);};
    g.fillStyle='#fff';g.font='900 26px "Hiragino Maru Gothic ProN",system-ui,sans-serif';txt(t('hud')+'　'+stName(st),VW/2,50);
    g.font='900 44px system-ui,sans-serif';txt(distStr(traveled(st,S.u)),VW/2,104);
@@ -1134,7 +1145,7 @@ async function makeVideo(){
  });
  rec.stop();await done;
  try{lp.disconnect(dest);}catch(_){}
- VC.dispose&&VC.dispose();VR.dispose();clearFx();$('big').innerHTML='';cam.aspect=oldA;cam.updateProjectionMatrix();fit();
+ if(VC&&VC.dispose)VC.dispose();VR.dispose();clearFx();$('big').innerHTML='';cam.aspect=oldA;cam.updateProjectionMatrix();fit();
  Object.assign(L,keep);earth.visible=r.kind==='clear';eShadow.visible=earth.visible;
  finish(new Blob(chunks,{type:(mime||'video/webm').split(';')[0]}));
  function finish(blob){

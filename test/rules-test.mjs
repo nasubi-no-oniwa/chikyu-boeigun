@@ -41,6 +41,11 @@ ex('2段目のブースターを投げる',await post(U[1],'p1cccccccccccccc','�
 await sleep(20100);
 ex('同じ段のブースターをもう一度投げる',await post(U[1],'p1dddddddddddddd','もう一個',5),false);
 ex('1段目は投げられない',await post(U[2],'p2dddddddddddddd','いる？',1),false);
+// ===== 通報 =====
+ex('通報する',await req('PUT','chikyu/rep/p1aaaaaaaaaaaaaa/'+U[2],U[2],TS),true);
+ex('同じ人がもう一度通報',await req('PUT','chikyu/rep/p1aaaaaaaaaaaaaa/'+U[2],U[2],TS),false);
+ex('ほかの人のふりで通報',await req('PUT','chikyu/rep/p1aaaaaaaaaaaaaa/'+U[3],U[2],TS),false);
+ex('ない書きこみを通報',await req('PUT','chikyu/rep/nothingnothing00/'+U[2],U[2],TS),false);
 // ===== 受け取り =====
 ex('自分の投げたものを受け取る',await claim(U[1],'p1cccccccccccccc',1,4),false);
 ex('受け取りの記録だけ書く（持ち物なし）',await req('PUT','chikyu/claim/p1cccccccccccccc/1',U[2],U[2]),false);
