@@ -823,7 +823,7 @@ function updHud(S){
 let last=performance.now(),clock=0;
 function frame(now){
  const rdt=Math.min(.1,(now-last)/1000);last=now;clock+=rdt;watchPerf(rdt);
- if(mode==='video'){requestAnimationFrame(frame);return;}
+ if(mode==='video'||mode==='pv'){requestAnimationFrame(frame);return;}
  let dt=rdt;
  if(mode==='count'){L.countT+=dt;const k=L.countT;
   if(k<3){const n=3-Math.floor(k);if($('big').dataset.n!=String(n)){$('big').dataset.n=n;bigText(String(n),t('ready'));SFX.beep(false);}}
@@ -1161,9 +1161,40 @@ async function makeVideo(){
  }
 }
 
+// ===== 宣伝動画を撮るための道具（遊びには使わない） =====
+const PV={};
+function pvInit(c){
+ show(null);clearFx();setAW(c.w||EB.AW);newRun();L.stage=c.stage;L.bid=c.bid;prepStage(c.stage);
+ const S=EB.create(c.seed||1,c.stage,c.bid,c.w||EB.AW);S.u=c.u0||0;S.tick=c.tick0||0;S.next=S.tick+20;
+ L.S=S;L.px=S.x;L.pz=S.z;L.passed=EB.passed(c.stage,S.u);L.deadT=null;L.clearT=null;
+ Object.assign(PV,{acc:0,c,ev:[]});mode='pv';$('big').innerHTML='';$('hud').hidden=!!c.noHud;$('boostBtn').hidden=!!c.noHud;
+ $('hudTitle').textContent=t('hud')+'　'+c.stage+'. '+stName(c.stage);updHud(S);
+}
+// かんたんな自動操縦：ぶつからない向きをえらぶ（seek：ブースト中は隕石に向かう）
+function pvBot(S,seek){let best=0,bs=-1e9;for(let d=0;d<=32;d+=(d?2:1)){const v=d?DIR[d-1]:[0,0];const x=S.x+v[0]*1.3,z=S.z+v[1]*1.3;let mn=9;
+ for(const m of S.ms){if(S.tick<m.ti)continue;for(let k=0;k<36;k+=6){const dd=Math.hypot(x*k/36+S.x*(1-k/36)-m.x-m.vx*k,z*k/36+S.z*(1-k/36)-m.z-m.vz*k)-m.r-.5;if(dd<mn)mn=dd;}}
+ const sc=(seek?-Math.min(mn,3)*4:Math.min(mn,1)*10)-Math.abs(x)*.05-Math.abs(z-2.4)*.1;if(sc>bs){bs=sc;best=d;}}return best;}
+function pvFrame(dt,ctl){
+ ctl=ctl||{};const S=L.S,ev=[];let d2=dt;
+ if(L.deadT!=null){d2=dt*slowK(L.deadT);L.deadT+=d2;}
+ else if(L.clearT!=null){L.clearT+=dt;}
+ else{PV.acc+=dt;while(PV.acc>=1/TICK){PV.acc-=1/TICK;L.px=S.x;L.pz=S.z;
+  if(S.tick%3===0)PV.dir=ctl.dir!=null?ctl.dir:pvBot(S,(ctl.seek&&S.bt>0)||ctl.hunt);
+  const bo=ctl.boost&&S.boosts>0&&S.bt<=0?1:0;ctl.boost=false;
+  const p0=L.passed;EB.step(S,PV.dir||0,bo);handleEv(S.ev,S);
+  for(const x of S.ev){if(x.e==='smash')ev.push('smash');if(x.e==='boost')ev.push('boost');if(x.e==='warn'&&x.m.ti>x.m.t0)ev.push('warn');}
+  if(L.passed>p0)ev.push(MARKS[S.stage][L.passed-1][0]==='helio'?'escape':'pass');
+  if(S.dead){if(ctl.die){L.deadT=0;SFX.boom();blowUp(S.x,S.z,S.tick);ev.push('dead');break;}S.dead=false;if(S.by)S.by.gone=true;S.ms=S.ms.filter(m=>!m.gone);}
+  if(S.clear){L.clearT=0;flashScreen(true);ev.push('warp');break;}}}
+ const a=L.deadT==null&&L.clearT==null?Math.min(1,PV.acc*TICK):1;
+ L.acc=a/TICK;updHud(S);
+ const m0=mode;mode='replay';render(d2,dt);mode=m0;
+ return {ev,u:S.u,tick:S.tick,boosts:S.boosts,dead:S.dead,clear:S.clear};
+}
+
 // ===== はじめ =====
 fit();applyLang();showTitle();try{R.compile(S3,cam);}catch(e){}requestAnimationFrame(frame);
-window.__cb={L,get mode(){return mode},set mode(v){mode=v},EB,show,distStr,traveled,t,set joyDir(v){joyDir=v},startCount,render,blowUp,clearFx,prepStage,prog,saveProg,drawPick,showTitle,
+window.__cb={pvInit,pvFrame,setAW,flashScreen,bigText,L,get mode(){return mode},set mode(v){mode=v},EB,show,distStr,traveled,t,set joyDir(v){joyDir=v},startCount,render,blowUp,clearFx,prepStage,prog,saveProg,drawPick,showTitle,
  setStage(s){curStage=s;ls.set('cb_stage',s);drawPick();titleScene();},pick(b){pick[curStage]=b;ls.set('cb_pick',pick);drawPick();}};
 </script>
 </body>
