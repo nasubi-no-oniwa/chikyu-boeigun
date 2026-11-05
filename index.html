@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon.png">
 <style>
-:root{--bg:#05060c;--ink:#1d1d1d;--sub:#666;--accent:#2a6fd6;--hot:#ff5a1f;--ok:#1aa34a;--card:#fbfcff;--gold:#c98a00}
+:root{--bg:#05060c;--ink:#e8ecff;--sub:#9aa6c8;--accent:#4f8cff;--hot:#ff5a1f;--ok:#3ddc84;--card:#0c1230;--gold:#e6b422}
 [hidden]{display:none!important}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Maru Gothic ProN","Rounded Mplus 1c",system-ui,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
@@ -28,12 +28,12 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family
 #pad{position:fixed;inset:0;z-index:3;touch-action:none}
 #hud{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 6px);text-align:center;z-index:4;pointer-events:none;color:#fff}
 #hudTitle{font-size:12px;font-weight:900;color:#fffb}
-#hudDist{font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;text-shadow:0 2px 0 #0008,0 0 10px #2a6fd6aa;line-height:1.15}
+#hudDist{font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;text-shadow:0 0 8px #6fb6ff,0 0 22px #6f6bff,0 2px 0 #0008;line-height:1.15}
 #hudNext{font-size:13px;font-weight:800;color:#ffd76a;text-shadow:0 1px 2px #000}
 #hudBar{width:62%;max-width:300px;height:6px;margin:5px auto 0;background:#ffffff22;border-radius:9px;overflow:hidden}
 #hudBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#6fb6ff,#ffd76a);border-radius:9px}
 #hudBest{font-size:11px;color:#fffa;font-variant-numeric:tabular-nums;margin-top:3px}
-#big{position:fixed;left:0;right:0;top:32%;text-align:center;font-size:44px;font-weight:900;color:#fff;text-shadow:0 4px 0 #0008,0 0 16px #2a6fd6;z-index:7;pointer-events:none;line-height:1.15;padding:0 10px}
+#big{position:fixed;left:0;right:0;top:32%;text-align:center;font-size:44px;font-weight:900;color:#fff;text-shadow:0 0 10px #fff,0 0 24px #6fb6ff,0 0 48px #9f6bff,0 4px 0 #0008;z-index:7;pointer-events:none;line-height:1.15;padding:0 10px}
 #big small{display:block;font-size:18px;margin-top:6px;color:#ffd76a}
 #big.pop{animation:pop .5s ease-out}
 @keyframes pop{0%{transform:scale(1.6);opacity:0}60%{transform:scale(.95);opacity:1}100%{transform:scale(1)}}
@@ -41,34 +41,35 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family
 #joyKnob{position:fixed;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:#fffc;box-shadow:0 3px 0 #0006;z-index:5;pointer-events:none}
 #pcKeys{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);text-align:center;font-size:12px;color:#fffb;z-index:4;pointer-events:none}
 .panel{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:#0007;padding:12px}
-.card{background:var(--card);border:3px solid var(--ink);border-radius:18px;padding:16px;max-width:400px;width:100%;text-align:center;max-height:100%;overflow:auto;box-shadow:0 8px 0 #0006}
-.card h1{margin:0 0 4px;font-size:32px;line-height:1.2;letter-spacing:.04em}
-.card h1 em{font-style:normal;color:var(--accent)}
+.card{background:linear-gradient(160deg,#101a44ee,#0a0f26f2);color:var(--ink);border:2px solid #4f8cff88;border-radius:20px;padding:16px;max-width:400px;width:100%;text-align:center;max-height:100%;overflow:auto;box-shadow:0 0 0 1px #c79bff33,0 0 40px #4f8cff55,inset 0 0 30px #4f8cff22;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.card h1{margin:0 0 4px;font-size:34px;line-height:1.2;letter-spacing:.05em;background:linear-gradient(90deg,#6fd0ff,#9f8bff,#ff8fd8,#ffd76a,#6fd0ff);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite;filter:drop-shadow(0 0 10px #6fb6ff88)}
+.card h1 em{font-style:normal}
+@keyframes shine{to{background-position:300% 0}}
 .card h2{margin:0 0 6px;font-size:22px}
 .card h3{margin:12px 0 6px;font-size:14px;text-align:left;color:var(--sub)}
 .card p{margin:8px 0;line-height:1.6;font-size:13px;color:var(--sub)}
-.card button{display:block;width:100%;margin-top:9px;padding:13px;border:none;border-radius:12px;font-size:17px;font-weight:800;font-family:inherit;background:var(--accent);color:#fff;cursor:pointer}
-.card button.sub{background:#e8ecf4;color:var(--ink);font-size:15px}
-.card button.x{background:#000;color:#fff}
+.card button{display:block;width:100%;margin-top:9px;padding:13px;border:none;border-radius:12px;font-size:17px;font-weight:800;font-family:inherit;background:linear-gradient(135deg,#2f7bff,#8a4dff);color:#fff;cursor:pointer;box-shadow:0 0 18px #5a6dff66}
+.card button.sub{background:#1a2450;color:var(--ink);font-size:15px;box-shadow:none;border:1px solid #33407a}
+.card button.x{background:#000;color:#fff;border:1px solid #445;box-shadow:none}
 .card button:disabled{opacity:.45}
-.card input,.card textarea{width:100%;font-size:16px;border-radius:10px;border:2px solid #ccc;padding:9px;font-family:inherit;margin-top:6px}
+.card input,.card textarea{width:100%;font-size:16px;border-radius:10px;border:2px solid #33407a;background:#070b1c;color:#fff;padding:9px;font-family:inherit;margin-top:6px}
 .card textarea{resize:none;height:62px}
-.card select{width:100%;font-size:15px;border-radius:10px;border:2px solid #ccc;padding:8px;font-family:inherit;margin-top:6px;background:#fff}
+.card select{width:100%;font-size:15px;border-radius:10px;border:2px solid #33407a;padding:8px;font-family:inherit;margin-top:6px;background:#070b1c;color:#fff}
 .row{display:flex;gap:8px}.row button{flex:1}
 #langs{display:flex;gap:6px;justify-content:center;margin-top:10px}
-#langs button{width:auto;flex:none;padding:6px 10px;font-size:13px;margin:0;background:#eee;color:var(--ink)}
-#langs button.on{background:var(--ink);color:#fff}
+#langs button{width:auto;flex:none;padding:6px 10px;font-size:13px;margin:0;background:#1a2450;color:var(--ink);box-shadow:none}
+#langs button.on{background:#6fb6ff;color:#061030}
 .stages{display:grid;grid-template-columns:1fr;gap:6px}
-.stages button{margin:0;padding:9px 10px;text-align:left;font-size:14px;background:#eef2fa;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:6px;border:2px solid transparent}
-.stages button.on{border-color:var(--accent);background:#dfeaff}
+.stages button{margin:0;padding:9px 10px;text-align:left;font-size:14px;background:#141c40;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:6px;border:2px solid #232d5c;box-shadow:none}
+.stages button.on{border-color:#6fd0ff;background:linear-gradient(90deg,#1c3a8a,#3a2a8a);box-shadow:0 0 14px #6fd0ff55}
 .stages button:disabled{opacity:.45}
 .stages small{font-size:11px;color:var(--sub);font-weight:700;text-align:right}
 .boosts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
-.boosts button{margin:0;padding:7px 4px;font-size:11px;background:#f3f5f9;color:var(--ink);border:2px solid transparent;line-height:1.3;font-weight:700}
-.boosts button.on{border-color:var(--accent);background:#dfeaff}
+.boosts button{margin:0;padding:7px 4px;font-size:11px;background:#141c40;color:var(--ink);border:2px solid #232d5c;line-height:1.3;font-weight:700;box-shadow:none}
+.boosts button.on{border-color:#ffd76a;background:linear-gradient(160deg,#3a2a10,#2a1a50);box-shadow:0 0 14px #ffd76a55}
 .boosts button b{display:block;font-size:12px}
 .boosts .tier{grid-column:1/-1;text-align:left;font-size:11px;font-weight:900;color:var(--sub);margin-top:4px}
-.bar{height:5px;background:#ddd;border-radius:9px;margin-top:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}
+.bar{height:5px;background:#26305a;border-radius:9px;margin-top:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}
 .bar.ag i{background:var(--ok)}
 .fit{font-size:12px;font-weight:800;margin-top:6px;min-height:1.3em}
 .fit.weak{color:#d23}.fit.over{color:var(--gold)}.fit.just{color:var(--ok)}
@@ -80,18 +81,18 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family
 .note{font-size:13px;min-height:1.3em}
 .note.err{color:#d23}.note.ok{color:var(--ok)}
 table.rank{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
-table.rank td{padding:6px 3px;border-bottom:1px solid #eee;text-align:left}
+table.rank td{padding:6px 3px;border-bottom:1px solid #222b55;text-align:left}
 table.rank td.r{color:var(--accent);font-weight:900;width:2.2em}
 table.rank td.n{max-width:9em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 table.rank td.c{text-align:right;font-weight:900;white-space:nowrap}
-table.rank td.p button{margin:0;padding:4px 7px;font-size:12px;width:auto;background:#eee;color:var(--ink)}
-table.rank tr.me td{background:#e3eeff}
+table.rank td.p button{margin:0;padding:4px 7px;font-size:12px;width:auto;background:#1a2450;color:var(--ink);box-shadow:none}
+table.rank tr.me td{background:#1f2f70}
 .clrs{font-size:12px;text-align:left;margin:0 0 8px;color:var(--sub);line-height:1.7}
 #rankBox,#bbsList{max-height:46vh;overflow:auto;text-align:left}
-.post{border-bottom:1px solid #eee;padding:8px 2px;font-size:14px;line-height:1.5}
+.post{border-bottom:1px solid #222b55;padding:8px 2px;font-size:14px;line-height:1.5}
 .post .h{font-size:11px;color:var(--sub)}.post .h b{color:var(--ink);font-size:12px}
 .post .x{word-break:break-all;white-space:pre-wrap}
-.gift{margin-top:5px;background:#fff7e0;border:2px solid #f2d27a;border-radius:10px;padding:6px 8px;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.gift{margin-top:5px;background:#2a2108;border:2px solid #a8822a;border-radius:10px;padding:6px 8px;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:6px}
 .gift button{margin:0;width:auto;padding:6px 10px;font-size:12px;background:var(--gold);flex:none}
 .new{color:var(--ok);font-weight:900}
 #vidPrev{width:100%;max-height:46vh;object-fit:contain;background:#000;border-radius:10px;display:block}
@@ -99,6 +100,10 @@ table.rank tr.me td{background:#e3eeff}
 #replayBar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);z-index:9;display:flex;gap:8px;align-items:center;background:#000c;color:#fff;padding:8px 10px 8px 14px;border-radius:999px;font-weight:800;font-size:14px;white-space:nowrap;max-width:94vw}
 #replayBar span{overflow:hidden;text-overflow:ellipsis}
 #replayBar button{border:none;border-radius:999px;padding:7px 12px;font-weight:800;font-family:inherit;background:#fff;color:#000}
+#flash{position:fixed;inset:0;z-index:6;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 45%,#fff 0,#bfe0ff 25%,#6f8bff55 55%,transparent 75%)}
+#flash.on{animation:fl .7s ease-out}
+#flash.big{animation:fl 1.4s ease-out}
+@keyframes fl{0%{opacity:.85}100%{opacity:0}}
 </style>
 </head>
 <body>
@@ -106,6 +111,7 @@ table.rank tr.me td{background:#e3eeff}
 <div id="pad"></div>
 <div id="hud" hidden><div id="hudTitle"></div><div id="hudDist">0</div><div id="hudNext"></div><div id="hudBar"><i></i></div><div id="hudBest"></div></div>
 <div id="big"></div>
+<div id="flash"></div>
 <div id="joyBase" hidden></div><div id="joyKnob" hidden></div>
 <div id="pcKeys" hidden></div>
 <div id="recBadge" hidden></div>
@@ -180,8 +186,13 @@ table.rank tr.me td{background:#e3eeff}
 </div>
 
 <script src="sim.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'three';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 const $=id=>document.getElementById(id);
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const GAME_URL='https://nasubi-no-oniwa.github.io/chikyu-boeigun/';
@@ -432,7 +443,10 @@ const S3=new THREE.Scene();
 const BGC=[0,0x05060c,0x0a0618,0x05051a,0x030209,0x120508];
 S3.background=new THREE.Color(BGC[1]);
 const cam=new THREE.PerspectiveCamera(38,1,.1,400);
-const TILT=.30,TGT=new THREE.Vector3(0,0,.3);let camD=24;
+const TILT=.30,TGT=new THREE.Vector3(0,0,.3);let camD=24,punch=0;
+// 光のにじみ（光るものがふわっと輝く）
+const composer=new EffectComposer(R);composer.setPixelRatio(Math.min(devicePixelRatio,1.5));composer.addPass(new RenderPass(S3,cam));
+const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.75,.45,.82);composer.addPass(bloom);composer.addPass(new OutputPass());
 S3.add(new THREE.HemisphereLight(0xcfe0ff,0x101020,.55));
 const sunL=new THREE.DirectionalLight(0xfff1d0,2.1);sunL.position.set(-2,6,9);S3.add(sunL);
 function canvasTex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;return tx;}
@@ -464,16 +478,16 @@ function bgPlane(tex,w,h,x,z,rot,op){const m=new THREE.Mesh(new THREE.PlaneGeome
 // 太陽（ステージ1だけ。うしろでだんだん小さくなる）
 const sunG=new THREE.Group();S3.add(sunG);
 const sunM=new THREE.Mesh(new THREE.SphereGeometry(1,32,24),new THREE.MeshBasicMaterial({color:0xffd24a}));sunG.add(sunM);
-const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:0xffc060,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));sunG.add(halo);
-function placeSun(au){const k=Math.max(.04,1/Math.sqrt(au));sunG.position.set(0,-9-6*k,AH+4.5+3*k);sunM.scale.setScalar(5.5*k);halo.scale.setScalar(22*k+1.2);}
+const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:0xffa040,transparent:true,opacity:.6,depthWrite:false,blending:THREE.AdditiveBlending}));sunG.add(halo);
+function placeSun(au){const k=Math.max(.04,1/Math.sqrt(au));sunG.position.set(0,-9-6*k,AH+4.5+3*k);sunM.scale.setScalar(5.5*k);halo.scale.setScalar(13*k+1.2);}
 function setTheme(st){
  S3.background.setHex(BGC[st]);for(const s of STARS)s.m.color.setHex(STAR_COL[st]);
  while(BG.children.length){const c=BG.children.pop();c.geometry.dispose();c.material.dispose();}
- if(st<=2)bgPlane(mwTex,60,16,0,-6,.5,st===1?.5:.9);
+ if(st<=2)bgPlane(mwTex,60,16,0,-6,.5,st===1?.35:.45);
  if(st===3){for(let i=0;i<5;i++)bgPlane(galTex,5+i,5+i,(i%2?1:-1)*(6+i*1.5),-14+i*7,i,.35);}
  if(st===4)bgPlane(webTex,70,70,0,0,0,.6);
  if(st===5){bgPlane(webTex,80,80,0,0,1,.35);const r=bgPlane(haloTex,70,70,0,-20,0,.18);r.material.color.setHex(0xff8040);}
- sunG.visible=st===1;
+ sunG.visible=st===1;setNebula(st);
 }
 
 // ===== 地球（スーパーマンのように手足が生えている） =====
@@ -488,7 +502,7 @@ const earth=new THREE.Group();earth.scale.setScalar(1.12);S3.add(earth);
 const ball=new THREE.Group();earth.add(ball);
 const globe=new THREE.Mesh(new THREE.SphereGeometry(.5,40,28),new THREE.MeshStandardMaterial({map:earthTex,roughness:.6}));globe.position.y=.55;ball.add(globe);
 const clouds=new THREE.Mesh(new THREE.SphereGeometry(.515,40,28),new THREE.MeshStandardMaterial({map:cloudTex,transparent:true,depthWrite:false,roughness:1}));clouds.position.y=.55;ball.add(clouds);
-const atmo=new THREE.Mesh(new THREE.SphereGeometry(.58,32,24),new THREE.MeshBasicMaterial({color:0x6fb6ff,transparent:true,opacity:.18,depthWrite:false,side:THREE.BackSide}));atmo.position.y=.55;ball.add(atmo);
+const atmo=new THREE.Mesh(new THREE.SphereGeometry(.58,32,24),new THREE.MeshBasicMaterial({color:0x7fc4ff,transparent:true,opacity:.32,depthWrite:false,side:THREE.BackSide}));atmo.position.y=.55;ball.add(atmo);
 const LM=new THREE.MeshStandardMaterial({color:0xf2f2f2,roughness:.35,metalness:.05});
 function limb(len){const g=new THREE.Group();const m=new THREE.Mesh(new THREE.CapsuleGeometry(.07,len,6,10),LM);m.rotation.x=Math.PI/2;m.position.z=len/2;g.add(m);return g;}
 const armL=limb(.62),armR=limb(.62),legL=limb(.55),legR=limb(.55);
@@ -545,7 +559,7 @@ function visFor(m,st){
  const g=new THREE.Group();S3.add(g);const sty=styleOf(st,m);let body;const extra=[];
  if(sty==='rock'){const mat=m.belt?MAT.ice:st>=2&&m.k==='aim'?MAT.rogue:(MAT[m.k]||MAT.rock);body=new THREE.Mesh(RG[m.id%RG.length],mat);body.scale.setScalar(m.r);}
  else if(sty==='star'){const col=m.k==='big'?0xff6a3a:m.k==='fast'?0x9fd4ff:STARC[m.id%STARC.length];body=new THREE.Mesh(SPH,new THREE.MeshBasicMaterial({color:col}));body.scale.setScalar(m.r*.8);
-  const h=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:col,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));h.scale.setScalar(m.r*3.4);g.add(h);extra.push(h);}
+  const h=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:col,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));h.scale.setScalar(m.r*2.5);g.add(h);extra.push(h);}
  else if(sty==='galaxy'){const col=m.k==='big'?0xffe0a0:m.k==='aim'?0xff8a70:0xc8d8ff;body=new THREE.Mesh(PLN,new THREE.MeshBasicMaterial({map:galTex,color:col,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));body.rotation.x=-Math.PI/2;body.scale.setScalar(m.r*1.35);}
  else if(sty==='node'){body=new THREE.Mesh(PLN,new THREE.MeshBasicMaterial({map:nodeTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));body.rotation.x=-Math.PI/2;body.scale.set(m.r*1.4,m.r*1.1,1);
   const h=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:0xc8a0ff,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));h.scale.setScalar(m.r*2.6);g.add(h);extra.push(h);}
@@ -553,7 +567,7 @@ function visFor(m,st){
   const ring=new THREE.Mesh(new THREE.RingGeometry(3.3,3.4,48),new THREE.MeshBasicMaterial({color:0xb080ff,transparent:true,opacity:.14,depthWrite:false}));ring.rotation.x=-Math.PI/2;g.add(ring);extra.push(ring);}
  g.add(body);
  let tail=null;
- if(m.k==='fast'||m.k==='side'||m.k==='aim'){tail=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:m.k==='side'?tailTexB:tailTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));tail.rotation.x=-Math.PI/2;g.add(tail);}
+ if(m.k!=='bh'&&sty!=='galaxy'&&sty!=='node'){const hot=m.k==='fast'||m.k==='side'||m.k==='aim';tail=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:m.k==='side'||m.belt?tailTexB:tailTex,transparent:true,opacity:hot?1:.55,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));tail.rotation.x=-Math.PI/2;g.add(tail);}
  const warn=new THREE.Sprite(new THREE.SpriteMaterial({map:warnTex,transparent:true,depthWrite:false,depthTest:false}));warn.scale.setScalar(.7);warn.renderOrder=20;warn.visible=false;S3.add(warn);
  v={g,body,sty,tail,warn,m,extra,spin:[(m.id%5-2)*.6,(m.id%3-1)*.9]};VIS.set(m.id,v);return v;
 }
@@ -621,6 +635,47 @@ function syncWorld(S,u,dt){
  if(S.stage===1)placeSun(EB.lyAt(1,u)/EB.AU);
 }
 
+// ===== 派手な演出 =====
+// 動ける範囲の光る枠（ふちに当たると光る）
+const frameG=new THREE.Group();S3.add(frameG);
+const frameMat=new THREE.MeshBasicMaterial({color:0x6fd0ff,transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending});
+const frameGlow=new THREE.MeshBasicMaterial({color:0x6f8bff,transparent:true,opacity:.14,depthWrite:false,blending:THREE.AdditiveBlending});
+for(const [mat,th] of [[frameMat,.05],[frameGlow,.42]])for(const [w,h,x,z] of [[AW*2+th,th,0,-AH],[AW*2+th,th,0,AH],[th,AH*2,-AW,0],[th,AH*2,AW,0]]){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);m.rotation.x=-Math.PI/2;m.position.set(x,.02,z);frameG.add(m);}
+for(const [x,z] of [[-AW,-AH],[AW,-AH],[-AW,AH],[AW,AH]]){const c=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:0x9fe0ff,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));c.position.set(x,.1,z);c.scale.setScalar(.9);frameG.add(c);}
+const edgeGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:0x7fd8ff,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));edgeGlow.scale.setScalar(2.6);edgeGlow.visible=false;S3.add(edgeGlow);
+function syncFrame(x,z,clock){
+ frameMat.opacity=.42+.18*Math.sin(clock*3);frameGlow.opacity=.1+.06*Math.sin(clock*3);
+ const ex=AW-EB.ER-.03,ez=AH-EB.ER-.03;let gx=null,gz=null;
+ if(mode==='play'||mode==='replay'){if(x>=ex){gx=AW;gz=z;}else if(x<=-ex){gx=-AW;gz=z;}else if(z>=ez){gx=x;gz=AH;}else if(z<=-ez){gx=x;gz=-AH;}}
+ edgeGlow.visible=gx!=null;if(gx!=null){edgeGlow.position.set(gx,.3,gz);edgeGlow.material.opacity=.7+.3*Math.sin(clock*20);}
+}
+// 色つきの星雲（ステージで色が変わる）
+function nebTexFor(seed,cols){return canvasTex(512,512,(g,w,h)=>{const q=prng(seed);for(let i=0;i<46;i++){const x=q()*w,y=q()*h,r=40+q()*150;const c=cols[i%cols.length];const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,'rgba('+c+',.09)');gr.addColorStop(1,'rgba('+c+',0)');g.fillStyle=gr;g.fillRect(0,0,w,h);}});}
+const NEBC=[0,['60,120,255','40,200,220','120,80,255'],['255,90,190','160,80,255','255,160,90'],['110,140,255','190,120,255','80,200,255'],['200,80,255','255,90,200','90,120,255'],['255,90,60','255,170,60','200,60,160']];
+const NEB=new THREE.Group();S3.add(NEB);
+function setNebula(st){while(NEB.children.length){const c=NEB.children.pop();c.material.dispose();c.geometry.dispose();}const tx=nebTexFor(st*13+1,NEBC[st]);
+ for(let i=0;i<2;i++){const m=new THREE.Mesh(new THREE.PlaneGeometry(46,46),new THREE.MeshBasicMaterial({map:tx,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));m.rotation.x=-Math.PI/2;m.rotation.z=i*1.7;m.position.set(0,-22,-23+i*46);NEB.add(m);}}
+function scrollNeb(v){for(const m of NEB.children){m.position.z+=v*.12;if(m.position.z>46)m.position.z-=92;}}
+// ブースターの火の粉
+const SPARK=[];for(let i=0;i<90;i++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));s.visible=false;S3.add(s);SPARK.push(s);}
+let sparkI=0;
+function emitSpark(x,z,tier,n){for(let k=0;k<n;k++){const s=SPARK[sparkI++%SPARK.length];s.visible=true;s.position.set(x+(Math.random()-.5)*.25,.5,z+1.3);const life=.3+Math.random()*.3;s.userData={vx:(Math.random()-.5)*1.4,vz:4+Math.random()*6,life,max:life};s.material.color.setHex(FLAME_COL[(tier||1)-1]);}}
+function stepSparks(dt){for(const s of SPARK){if(!s.visible)continue;const u=s.userData;u.life-=dt;if(u.life<=0){s.visible=false;continue;}s.position.x+=u.vx*dt;s.position.z+=u.vz*dt;const k=u.life/u.max;s.scale.setScalar(.12+.4*k);s.material.opacity=k;}}
+// スピードの線（速いほど長く、ワープでは光の線になる）
+const STN=70,stg=new THREE.BufferGeometry(),stp=new Float32Array(STN*6),stz=[];
+for(let i=0;i<STN;i++){stz.push({x:(Math.random()*2-1)*11,y:-1-Math.random()*4,z:-30+Math.random()*48});}
+stg.setAttribute('position',new THREE.BufferAttribute(stp,3));
+const streak=new THREE.LineSegments(stg,new THREE.LineBasicMaterial({color:0xcfe6ff,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));S3.add(streak);
+function stepStreaks(v,str){const len=Math.min(16,.15+v*5+str*2.5);
+ for(let i=0;i<STN;i++){const o=stz[i];o.z+=v*2.4;if(o.z>18){o.z-=48;o.x=(Math.random()*2-1)*11;}stp.set([o.x,o.y,o.z,o.x,o.y,o.z-len],i*6);}
+ stg.attributes.position.needsUpdate=true;streak.material.opacity=Math.min(str>0?.7:.4,v*1.6+str*.2);}
+// 衝撃波の輪
+const ringG=new THREE.RingGeometry(.86,1,64);let SHK=[];
+function shock(x,z,col,size){const m=new THREE.Mesh(ringG,new THREE.MeshBasicMaterial({color:col,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));m.rotation.x=-Math.PI/2;m.position.set(x,.5,z);S3.add(m);SHK.push({m,age:0,size});}
+function stepShock(dt){SHK=SHK.filter(k=>{k.age+=dt;const a=k.age/.75;k.m.scale.setScalar(.3+a*k.size);k.m.material.opacity=Math.max(0,1-a);if(a>=1){S3.remove(k.m);k.m.material.dispose();return false;}return true;});}
+// 画面がぱっと光る
+function flashScreen(big){const f=$('flash');f.className='';void f.offsetWidth;f.className=big?'big':'on';punch=1;}
+
 // ===== 木っ端みじん =====
 let FX=[],shake=0,flash=null;
 const chunkG=new THREE.IcosahedronGeometry(1,0);
@@ -632,21 +687,23 @@ function blowUp(x,z,seed){
  for(const l of [armL,armR,legL,legR]){const c=l.clone();c.position.set(x+l.position.x,.55,z+l.position.z);S3.add(c);const a=q()*6.28;FX.push({m:c,vx:Math.cos(a)*3,vy:2+q()*2,vz:Math.sin(a)*3,rx:q()*8,ry:q()*8});}
  const fm=new THREE.MeshBasicMaterial({color:0xffc060,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
  flash={m:new THREE.Mesh(new THREE.SphereGeometry(1,24,16),fm),age:0};flash.m.position.set(x,.55,z);S3.add(flash.m);
- shake=1.2;
+ shock(x,z,0xffa040,9);shock(x,z,0xffffff,5);
+ for(let i=0;i<18;i++){const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,color:i%3?0xff7a2a:0xffd070,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));sp.position.set(x,.6,z);sp.scale.setScalar(.6);S3.add(sp);const a=q()*6.28,v=.6+q()*2.4;FX.push({m:sp,vx:Math.cos(a)*v,vy:.5+q(),vz:Math.sin(a)*v,rx:0,ry:0,life:1.1+q()*.6,fade:1.6,grow:2.2});}
+ shake=1.2;flashScreen(false);
 }
 // 上の段のブースターで隕石を砕いたとき
 const DEB=new THREE.MeshStandardMaterial({color:0x9a8a7a,roughness:.9,flatShading:true});
 function smashFx(m){const q=prng(m.id*7+3);
  for(let i=0;i<10;i++){const c=new THREE.Mesh(chunkG,DEB);c.scale.setScalar(m.r*(.15+q()*.2));c.position.set(m.x,.55,m.z);S3.add(c);const a=q()*6.28,sp=2+q()*4;FX.push({m:c,vx:Math.cos(a)*sp,vy:q()*3,vz:Math.sin(a)*sp-2,rx:q()*8,ry:q()*8,life:1.2});}
- shake=Math.min(1,shake+.25);}
+ shake=Math.min(1,shake+.25);shock(m.x,m.z,0xffd080,3);}
 function stepFx(dt){
- FX=FX.filter(f=>{if(f.life==null)return true;f.life-=dt;if(f.life<=0){S3.remove(f.m);return false;}return true;});
+ FX=FX.filter(f=>{if(f.life==null)return true;f.life-=dt;if(f.life<=0){S3.remove(f.m);if(f.fade)f.m.material.dispose();return false;}if(f.fade){f.m.material.opacity=Math.min(1,f.life/f.fade*1.4);f.m.scale.setScalar(f.m.scale.x+dt*f.grow);}return true;});
  for(const f of FX){f.m.position.x+=f.vx*dt;f.m.position.y+=f.vy*dt;f.m.position.z+=f.vz*dt;f.m.rotation.x+=f.rx*dt;f.m.rotation.y+=f.ry*dt;}
  if(flash){flash.age+=dt;const a=flash.age;flash.m.scale.setScalar(.5+a*5);flash.m.material.opacity=Math.max(0,1-a/.7);if(a>.8){S3.remove(flash.m);flash.m.material.dispose();flash.m.geometry.dispose();flash=null;}}
 }
-function clearFx(){for(const f of FX)S3.remove(f.m);FX=[];if(flash){S3.remove(flash.m);flash=null;}for(const v of [...VIS.values()])dropVis(v);earth.visible=true;eShadow.visible=true;}
+function clearFx(){for(const f of FX)S3.remove(f.m);FX=[];for(const k of SHK){S3.remove(k.m);k.m.material.dispose();}SHK=[];for(const s of SPARK)s.visible=false;if(flash){S3.remove(flash.m);flash=null;}for(const v of [...VIS.values()])dropVis(v);earth.visible=true;eShadow.visible=true;}
 
-function fit(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();fitTo(.72,-.97);}
+function fit(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);composer.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix();fitTo(.72,-.97);}
 function fitTo(top,bot){
  const pts=[[-AW-.2,-AH-.2],[AW+.2,-AH-.2],[-AW-.2,AH+.2],[AW+.2,AH+.2]];let lo=6,hi=90;
  for(let i=0;i<30;i++){const d=(lo+hi)/2;placeCam(d,0);cam.updateMatrixWorld();let ok=true;
@@ -712,7 +769,7 @@ function tickOnce(){
 function handleEv(ev,S){for(const x of ev){if(x.e==='warn'&&x.m.ti>x.m.t0)SFX.warn();else if(x.e==='go'&&x.m.k!=='peb')SFX.whoosh();else if(x.e==='smash'){smashFx(x.m);SFX.smash();}}
  const p=EB.passed(S.stage,S.u);if(p>L.passed){const from=L.passed;L.passed=p;if(S.clear||p-from>1)return;const k=MARKS[S.stage][p-1][0];
   const belt=EB.STAGES[S.stage].belts.some(b=>Math.abs(b[0]-S.u)<.015);
-  if(k==='helio'){flashText(t('escape'),'',2400);SFX.pass(true);}else{flashText(t('pass',{p:markName(S.stage,p-1)}),belt?t('beltIn'):'',1800);SFX.pass(false);}}}
+  if(k==='helio'){flashText(t('escape'),'',2400);SFX.pass(true);flashScreen(true);}else{flashText(t('pass',{p:markName(S.stage,p-1)}),belt?t('beltIn'):'',1800);SFX.pass(false);flashScreen(false);}}}
 function onDead(){
  mode='dead';L.deadT=0;SFX.droneOff();SFX.boom();blowUp(L.S.x,L.S.z,L.S.tick);
  L.res={kind:'dead',ms:EB.ms(L.S.tick),stage:L.stage,u:L.S.u,b:L.bid};$('big').innerHTML='';
@@ -720,7 +777,7 @@ function onDead(){
  $('joyBase').hidden=true;$('joyKnob').hidden=true;
 }
 function onClear(){
- mode='clear';L.clearT=0;SFX.droneOff();SFX.warp();
+ mode='clear';L.clearT=0;SFX.droneOff();SFX.warp();flashScreen(true);
  const fast=!!L.S.over;
  L.res={kind:'clear',ms:EB.ms(L.S.tick),stage:L.stage,u:1,b:L.bid,first:!cleared(L.stage)};
  bigText(fast?t('instant'):stName(L.stage)+' '+t('clearBig'),markName(L.stage,MARKS[L.stage].length-1));
@@ -759,13 +816,15 @@ function render(dt,rdt){
   syncMeteors(S,a,clock);syncWorld(S,u,dt);
   let v,str=0;
   if(mode==='title')v=rdt*1.2;else if(mode==='count')v=.02;else if(L.clearT!=null){v=rdt*(20+L.clearT*90);str=Math.min(6,L.clearT*4);}else v=EB.base(S)*TICK*dt*(S.dead?.15:1);
-  scrollStars(v,str);
+  scrollStars(v,str);scrollNeb(v);stepStreaks(v,str);STARS.forEach((s,i)=>s.m.opacity=.7+.25*Math.sin(clock*(1.3+i*.9)+i));
   if(mode==='play'||mode==='replay')updHud(S);
-  if(earth.visible){let z=L.pz+(S.z-L.pz)*a;if(L.clearT!=null)z-=L.clearT*L.clearT*6;poseEarth(L.px+(S.x-L.px)*a,z,S.moving&&mode!=='title',S.face,dt,S.B.tier);}
+  if(earth.visible){let z=L.pz+(S.z-L.pz)*a;if(L.clearT!=null)z-=L.clearT*L.clearT*6;const x=L.px+(S.x-L.px)*a;poseEarth(x,z,S.moving&&mode!=='title',S.face,dt,S.B.tier);
+   emitSpark(x,z,S.B.tier,L.clearT!=null?5:2);syncFrame(L.clearT!=null?0:x,L.clearT!=null?0:z,clock);}
+  else syncFrame(0,0,clock);
  }
- stepFx(dt);
- shake=Math.max(0,shake-rdt*2);placeCam(camD,shake*.45);
- R.render(S3,cam);
+ stepFx(dt);stepSparks(dt);stepShock(dt);
+ shake=Math.max(0,shake-rdt*2);punch=Math.max(0,punch-rdt*2.5);placeCam(camD*(1-.05*punch),shake*.45);
+ if(mode!=='video')composer.render();
 }
 
 // ===== 画面の切りかえ =====
@@ -1010,6 +1069,7 @@ async function makeVideo(){
  show(null);mode='video';$('recBadge').hidden=false;$('recBadge').textContent='● '+t('making');
  const g=can.getContext('2d');
  const VR=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});VR.setSize(VW,VH,false);VR.setPixelRatio(1);
+ const VC=new EffectComposer(VR);VC.setSize(VW,VH);VC.addPass(new RenderPass(S3,cam));VC.addPass(new UnrealBloomPass(new THREE.Vector2(VW,VH),.75,.45,.82));VC.addPass(new OutputPass());
  const oldA=cam.aspect;cam.aspect=VW/VH;cam.updateProjectionMatrix();fitTo(.62,-.72);
  ac();const dest=AC.createMediaStreamDestination();lp.connect(dest);
  const stream=can.captureStream(30);dest.stream.getAudioTracks().forEach(tr=>stream.addTrack(tr));
@@ -1032,7 +1092,7 @@ async function makeVideo(){
    else if(dT!=null){dt=rdt*slowK(dT);dT+=dt;if(dT>DEAD_END&&endAt==null)endAt=now;}
    else{cT+=rdt;L.clearT=cT;if(cT>CLEAR_END&&endAt==null)endAt=now;}
    L.acc=dT==null&&cT==null?acc:0;
-   render(dt,rdt);VR.render(S3,cam);g.drawImage(VR.domElement,0,0,VW,VH);
+   render(dt,rdt);VC.render();g.drawImage(VR.domElement,0,0,VW,VH);
    g.textAlign='center';g.lineJoin='round';g.lineWidth=8;g.strokeStyle='#000b';const txt=(s,x,y)=>{g.strokeText(s,x,y);g.fillText(s,x,y);};
    g.fillStyle='#fff';g.font='900 26px "Hiragino Maru Gothic ProN",system-ui,sans-serif';txt(t('hud')+'　'+stName(st),VW/2,50);
    g.font='900 44px system-ui,sans-serif';txt(distStr(traveled(st,S.u)),VW/2,104);
@@ -1051,7 +1111,7 @@ async function makeVideo(){
  });
  rec.stop();await done;
  try{lp.disconnect(dest);}catch(_){}
- VR.dispose();clearFx();$('big').innerHTML='';cam.aspect=oldA;cam.updateProjectionMatrix();fit();
+ VC.dispose&&VC.dispose();VR.dispose();clearFx();$('big').innerHTML='';cam.aspect=oldA;cam.updateProjectionMatrix();fit();
  Object.assign(L,keep);earth.visible=r.kind==='clear';eShadow.visible=earth.visible;
  finish(new Blob(chunks,{type:(mime||'video/webm').split(';')[0]}));
  function finish(blob){
