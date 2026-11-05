@@ -7,6 +7,7 @@ on:
     branches: [main]
     paths:
       - 'cb-remove.txt'
+      - 'bbs-hide.txt'
       - '.github/workflows/check.yml'
   workflow_dispatch:
 concurrency:

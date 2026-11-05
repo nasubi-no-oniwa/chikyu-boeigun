@@ -12,29 +12,133 @@
       }
     }
   },
-  "all": {
-    "scores": {
-      ".read": true,
-      ".indexOn": [
-        "s"
-      ],
+  "clr": {
+    ".read": true,
+    "$stage": {
       "$uid": {
-        ".write": "auth != null && auth.uid === $uid && newData.exists() && ((newData.child('st').val() === root.child('chikyu/runs/' + $uid + '/t').val() && (!data.exists() || (newData.child('st').val() > data.child('st').val() && newData.child('s').val() > data.child('s').val())) && now >= newData.child('st').val() + newData.child('s').val() && now <= newData.child('st').val() + newData.child('s').val() * 1.03 + 9000) || (data.exists() && newData.child('st').val() === data.child('st').val() && newData.child('s').val() === data.child('s').val() && newData.child('in').val() === data.child('in').val()))",
-        ".validate": "newData.hasChildren(['n','s','st','in','v','t'])",
-        "n": {
-          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 12"
-        },
+        ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.exists() && newData.child('st').val() === root.child('chikyu/runs/' + $uid + '/t').val() && now >= newData.child('st').val() + newData.child('s').val() && now <= newData.child('st').val() + newData.child('s').val() * 1.03 + 9000 && ($stage === '1' || ($stage === '2' && root.child('chikyu/clr/1/' + $uid).exists()) || ($stage === '3' && root.child('chikyu/clr/2/' + $uid).exists()) || ($stage === '4' && root.child('chikyu/clr/3/' + $uid).exists()) || ($stage === '5' && root.child('chikyu/clr/4/' + $uid).exists())) && ((newData.child('b').val() >= 0 && newData.child('b').val() <= 2) || (newData.child('b').val() === 3 && (root.child('chikyu/clr/1/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b3').exists())) || (newData.child('b').val() === 4 && (root.child('chikyu/clr/1/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b4').exists())) || (newData.child('b').val() === 5 && (root.child('chikyu/clr/1/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b5').exists())) || (newData.child('b').val() === 6 && (root.child('chikyu/clr/2/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b6').exists())) || (newData.child('b').val() === 7 && (root.child('chikyu/clr/2/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b7').exists())) || (newData.child('b').val() === 8 && (root.child('chikyu/clr/2/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b8').exists())) || (newData.child('b').val() === 9 && (root.child('chikyu/clr/3/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b9').exists())) || (newData.child('b').val() === 10 && (root.child('chikyu/clr/3/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b10').exists())) || (newData.child('b').val() === 11 && (root.child('chikyu/clr/3/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b11').exists())) || (newData.child('b').val() === 12 && (root.child('chikyu/clr/4/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b12').exists())) || (newData.child('b').val() === 13 && (root.child('chikyu/clr/4/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b13').exists())) || (newData.child('b').val() === 14 && (root.child('chikyu/clr/4/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b14').exists())))",
+        ".validate": "newData.hasChildren(['s','st','in','b','v','t']) && $stage.length === 1 && $stage >= '1' && $stage <= '4'",
         "s": {
-          ".validate": "newData.isNumber() && newData.val() >= 100 && newData.val() <= 600000"
+          ".validate": "newData.isNumber() && newData.val() >= 50 && newData.val() <= 900000"
         },
         "st": {
           ".validate": "newData.isNumber()"
         },
         "in": {
-          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 120000"
+          ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 160000"
+        },
+        "b": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 14 && newData.val() % 1 === 0"
         },
         "v": {
-          ".validate": "newData.val() === 1"
+          ".validate": "newData.val() === 2"
+        },
+        "t": {
+          ".validate": "newData.val() === now"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  },
+  "far": {
+    ".read": true,
+    ".indexOn": [
+      "p"
+    ],
+    "$uid": {
+      ".write": "auth != null && auth.uid === $uid && newData.exists() && ((newData.child('st').val() === root.child('chikyu/runs/' + $uid + '/t').val() && now >= newData.child('st').val() + newData.child('s').val() && now <= newData.child('st').val() + newData.child('s').val() * 1.03 + 9000 && root.child('chikyu/clr/4/' + $uid).exists() && ((newData.child('b').val() >= 0 && newData.child('b').val() <= 2) || (newData.child('b').val() === 3 && (root.child('chikyu/clr/1/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b3').exists())) || (newData.child('b').val() === 4 && (root.child('chikyu/clr/1/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b4').exists())) || (newData.child('b').val() === 5 && (root.child('chikyu/clr/1/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b5').exists())) || (newData.child('b').val() === 6 && (root.child('chikyu/clr/2/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b6').exists())) || (newData.child('b').val() === 7 && (root.child('chikyu/clr/2/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b7').exists())) || (newData.child('b').val() === 8 && (root.child('chikyu/clr/2/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b8').exists())) || (newData.child('b').val() === 9 && (root.child('chikyu/clr/3/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b9').exists())) || (newData.child('b').val() === 10 && (root.child('chikyu/clr/3/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b10').exists())) || (newData.child('b').val() === 11 && (root.child('chikyu/clr/3/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b11').exists())) || (newData.child('b').val() === 12 && (root.child('chikyu/clr/4/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b12').exists())) || (newData.child('b').val() === 13 && (root.child('chikyu/clr/4/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b13').exists())) || (newData.child('b').val() === 14 && (root.child('chikyu/clr/4/' + $uid).exists() || root.child('chikyu/inv/' + $uid + '/b14').exists()))) && (!data.exists() || (newData.child('st').val() > data.child('st').val() && newData.child('p').val() > data.child('p').val()))) || (data.exists() && newData.child('st').val() === data.child('st').val() && newData.child('s').val() === data.child('s').val() && newData.child('p').val() === data.child('p').val() && newData.child('b').val() === data.child('b').val() && newData.child('in').val() === data.child('in').val()))",
+      ".validate": "newData.hasChildren(['n','s','p','b','st','in','v','t'])",
+      "n": {
+        ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 12"
+      },
+      "s": {
+        ".validate": "newData.isNumber() && newData.val() >= 100 && newData.val() <= 900000"
+      },
+      "p": {
+        ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 54000000"
+      },
+      "st": {
+        ".validate": "newData.isNumber()"
+      },
+      "in": {
+        ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 160000"
+      },
+      "b": {
+        ".validate": "newData.isNumber() && newData.val() >= 12 && newData.val() <= 14 && newData.val() % 1 === 0"
+      },
+      "v": {
+        ".validate": "newData.val() === 2"
+      },
+      "t": {
+        ".validate": "newData.val() === now"
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  },
+  "lp": {
+    "$uid": {
+      ".write": "auth != null && auth.uid === $uid && newData.val() === now && (!data.exists() || now - data.val() >= 20000)"
+    }
+  },
+  "gave": {
+    "$uid": {
+      ".read": "auth != null && auth.uid === $uid",
+      "$t": {
+        ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.val() === now && $t >= 't2' && $t <= 't5' && $t.length === 2"
+      }
+    }
+  },
+  "bbs": {
+    ".read": true,
+    ".indexOn": [
+      "t"
+    ],
+    "$pid": {
+      ".write": "auth != null && !data.exists() && newData.exists() && newData.child('u').val() === auth.uid && newData.parent().parent().child('lp/' + auth.uid).val() === now && (!newData.child('g').exists() || (((newData.child('g').val() >= 0 && newData.child('g').val() <= 2) || (newData.child('g').val() === 3 && (root.child('chikyu/clr/1/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b3').exists())) || (newData.child('g').val() === 4 && (root.child('chikyu/clr/1/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b4').exists())) || (newData.child('g').val() === 5 && (root.child('chikyu/clr/1/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b5').exists())) || (newData.child('g').val() === 6 && (root.child('chikyu/clr/2/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b6').exists())) || (newData.child('g').val() === 7 && (root.child('chikyu/clr/2/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b7').exists())) || (newData.child('g').val() === 8 && (root.child('chikyu/clr/2/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b8').exists())) || (newData.child('g').val() === 9 && (root.child('chikyu/clr/3/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b9').exists())) || (newData.child('g').val() === 10 && (root.child('chikyu/clr/3/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b10').exists())) || (newData.child('g').val() === 11 && (root.child('chikyu/clr/3/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b11').exists())) || (newData.child('g').val() === 12 && (root.child('chikyu/clr/4/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b12').exists())) || (newData.child('g').val() === 13 && (root.child('chikyu/clr/4/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b13').exists())) || (newData.child('g').val() === 14 && (root.child('chikyu/clr/4/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b14').exists()))) && ((newData.child('g').val() >= 3 && newData.child('g').val() <= 5 && !root.child('chikyu/gave/' + auth.uid + '/t2').exists() && newData.parent().parent().child('gave/' + auth.uid + '/t2').exists()) || (newData.child('g').val() >= 6 && newData.child('g').val() <= 8 && !root.child('chikyu/gave/' + auth.uid + '/t3').exists() && newData.parent().parent().child('gave/' + auth.uid + '/t3').exists()) || (newData.child('g').val() >= 9 && newData.child('g').val() <= 11 && !root.child('chikyu/gave/' + auth.uid + '/t4').exists() && newData.parent().parent().child('gave/' + auth.uid + '/t4').exists()) || (newData.child('g').val() >= 12 && newData.child('g').val() <= 14 && !root.child('chikyu/gave/' + auth.uid + '/t5').exists() && newData.parent().parent().child('gave/' + auth.uid + '/t5').exists()))))",
+      ".validate": "newData.hasChildren(['u','n','x','t']) && $pid.length >= 10 && $pid.length <= 30",
+      "u": {
+        ".validate": "newData.isString()"
+      },
+      "n": {
+        ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 12"
+      },
+      "x": {
+        ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 60"
+      },
+      "t": {
+        ".validate": "newData.val() === now"
+      },
+      "g": {
+        ".validate": "newData.isNumber() && newData.val() >= 3 && newData.val() <= 14 && newData.val() % 1 === 0"
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  },
+  "claim": {
+    ".read": true,
+    "$pid": {
+      "$slot": {
+        ".write": "auth != null && !data.exists() && newData.val() === auth.uid && ($slot === '1' || $slot === '2' || $slot === '3' || $slot === '4' || $slot === '5') && root.child('chikyu/bbs/' + $pid + '/g').exists() && root.child('chikyu/bbs/' + $pid + '/u').val() !== auth.uid && data.parent().child('1').val() !== auth.uid && data.parent().child('2').val() !== auth.uid && data.parent().child('3').val() !== auth.uid && data.parent().child('4').val() !== auth.uid && data.parent().child('5').val() !== auth.uid && !((root.child('chikyu/bbs/' + $pid + '/g').val() >= 0 && root.child('chikyu/bbs/' + $pid + '/g').val() <= 2) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 3 && (root.child('chikyu/clr/1/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b3').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 4 && (root.child('chikyu/clr/1/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b4').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 5 && (root.child('chikyu/clr/1/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b5').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 6 && (root.child('chikyu/clr/2/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b6').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 7 && (root.child('chikyu/clr/2/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b7').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 8 && (root.child('chikyu/clr/2/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b8').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 9 && (root.child('chikyu/clr/3/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b9').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 10 && (root.child('chikyu/clr/3/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b10').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 11 && (root.child('chikyu/clr/3/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b11').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 12 && (root.child('chikyu/clr/4/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b12').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 13 && (root.child('chikyu/clr/4/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b13').exists())) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 14 && (root.child('chikyu/clr/4/' + auth.uid).exists() || root.child('chikyu/inv/' + auth.uid + '/b14').exists()))) && ((root.child('chikyu/bbs/' + $pid + '/g').val() === 3 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b3/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 4 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b4/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 5 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b5/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 6 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b6/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 7 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b7/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 8 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b8/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 9 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b9/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 10 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b10/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 11 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b11/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 12 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b12/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 13 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b13/p').val() === $pid) || (root.child('chikyu/bbs/' + $pid + '/g').val() === 14 && newData.parent().parent().parent().child('inv/' + auth.uid + '/b14/p').val() === $pid))"
+      }
+    }
+  },
+  "inv": {
+    ".read": true,
+    "$uid": {
+      "$bk": {
+        ".write": "auth != null && auth.uid === $uid && !data.exists() && newData.exists() && newData.parent().parent().parent().child('claim/' + newData.child('p').val() + '/' + newData.child('s').val()).val() === auth.uid && (($bk === 'b3' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 3) || ($bk === 'b4' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 4) || ($bk === 'b5' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 5) || ($bk === 'b6' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 6) || ($bk === 'b7' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 7) || ($bk === 'b8' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 8) || ($bk === 'b9' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 9) || ($bk === 'b10' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 10) || ($bk === 'b11' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 11) || ($bk === 'b12' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 12) || ($bk === 'b13' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 13) || ($bk === 'b14' && root.child('chikyu/bbs/' + newData.child('p').val() + '/g').val() === 14))",
+        ".validate": "newData.hasChildren(['p','s','t'])",
+        "p": {
+          ".validate": "newData.isString()"
+        },
+        "s": {
+          ".validate": "newData.isString()"
         },
         "t": {
           ".validate": "newData.val() === now"
