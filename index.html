@@ -111,6 +111,14 @@ table.rank tr.me td{background:#1f2f70}
 #flash.big{animation:fl 1.4s ease-out}
 @keyframes fl{0%{opacity:.85}100%{opacity:0}}
 </style>
+<!-- nasubi-track: 結果画面とXへの投稿の回数を記録（ゲームの動きには影響しない） -->
+<script>(function(){try{var G="chikyu-boeigun",IDS=["result"];
+function ev(n){try{if(typeof gtag==='function')gtag('event',n,{game:G});}catch(e){}}
+var o=window.open;window.open=function(u){try{if(/intent\/(post|tweet)/.test(String(u)))ev('x_share');}catch(e){}return o.apply(window,arguments);};
+if(!IDS.length)return;
+function vis(e){if(!e||!e.isConnected||e.closest('[hidden]'))return false;var r=e.getBoundingClientRect();if(r.width<1||r.height<1)return false;for(var n=e;n&&n.nodeType===1;n=n.parentElement){var s=getComputedStyle(n);if(s.display==='none'||s.visibility==='hidden'||parseFloat(s.opacity)<0.05)return false;}return true;}
+var was={};setInterval(function(){try{var any=false;for(var i=0;i<IDS.length;i++){if(vis(document.getElementById(IDS[i])))any=true;}if(any&&!was.v)ev('result_view');was.v=any;}catch(e){}},700);
+}catch(e){}})();</script>
 </head>
 <body>
 <canvas id="c"></canvas>
